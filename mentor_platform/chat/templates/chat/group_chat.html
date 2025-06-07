@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        #messages {
+            border: 1px solid #ccc;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #message-input {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Group Chat</h1>
+    <div id="messages"></div>
+    
+    <div id="message-input">
+        <input type="text" id="message" placeholder="Type your message here..." />
+        <button id="send">Send</button>
+    </div>
+
+    <script>
+        const groupName = 'IITH'; // Replace with the actual group name
+        const socket = new WebSocket(`ws://localhost:8000/ws/chat/group/${groupName}/`);
+
+        socket.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            displayMessage(data.sender, data.message);
+        };
+
+        socket.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        document.getElementById('send').onclick = () => {
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+            if (message.trim()) {
+                sendMessage(message);
+                messageInput.value = ''; // Clear input
+            }
+        };
+
+        function sendMessage(message) {
+            socket.send(JSON.stringify({ 'message': message }));
+        }
+
+        function displayMessage(sender, message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to bottom
+        }
+    </script>
+</body>
+</html>

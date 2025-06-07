@@ -1,0 +1,1872 @@
+[
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Tiruchirappalli (NITT)",
+        "url": "https://www.nitt.edu/",
+        "group_name": "NITT",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Karnataka (NITK)",
+        "url": "https://www.nitk.ac.in/",
+        "group_name": "NITK",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Rourkela (NITRKL)",
+        "url": "https://www.nitrkl.ac.in/",
+        "group_name": "NITRKL",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Warangal (NITW)",
+        "url": "https://www.nitw.ac.in/",
+        "group_name": "NITW",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Delhi (NITDELHI)",
+        "url": "http://www.nitdelhi.ac.in/",
+        "group_name": "NITDELHI",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Calicut (NITC)",
+        "url": "https://www.nitc.ac.in/",
+        "group_name": "NITC",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Srinagar (NITSRI)",
+        "url": "http://www.nitsri.net/",
+        "group_name": "NITSRI",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Durgapur (NITDGP)",
+        "url": "https://www.nitdgp.ac.in/",
+        "group_name": "NITDGP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Patna (NITP)",
+        "url": "http://www.nitp.ac.in/",
+        "group_name": "NITP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Hamirpur (NITH)",
+        "url": "http://www.nith.ac.in/",
+        "group_name": "NITH",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Jamshedpur (NITJSR)",
+        "url": "http://www.nitjsr.ac.in/",
+        "group_name": "NITJSR",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Mizoram (NITMIZORAM)",
+        "url": "http://www.nitmizoram.in/",
+        "group_name": "NITMIZORAM",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Arunachal Pradesh (NITAP)",
+        "url": "http://www.nitap.in/",
+        "group_name": "NITAP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Sikkim (NITSIKKIM)",
+        "url": "http://www.nitsikkim.ac.in/",
+        "group_name": "NITSIKKIM",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Nagaland (NITNAGALAND)",
+        "url": "http://www.nitinagaland.edu.in/",
+        "group_name": "NITNAGALAND",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Uttarakhand (NITUK)",
+        "url": "http://www.nituk.ac.in/",
+        "group_name": "NITUK",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Agartala (NITAGARTALA)",
+        "url": "http://www.nitagartala.in/",
+        "group_name": "NITAGARTALA",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "National Institute of Technology, Durgapur (NITDGP)",
+        "url": "https://www.nitdgp.ac.in/",
+        "group_name": "NITDGP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Roorkee (IITR)",
+        "url": "https://www.iitr.ac.in/",
+        "group_name": "IITR",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Delhi (IITD)",
+        "url": "https://home.iitd.ac.in/",
+        "group_name": "IITD",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Bombay (IITB)",
+        "url": "https://www.iitb.ac.in/",
+        "group_name": "IITB",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Madras (IITM)",
+        "url": "https://www.iitm.ac.in/",
+        "group_name": "IITM",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Kharagpur (IITKGP)",
+        "url": "https://www.iitkgp.ac.in/",
+        "group_name": "IITKGP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Gandhinagar (IITGN)",
+        "url": "https://www.iitgn.ac.in/",
+        "group_name": "IITGN",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Bhubaneswar (IITBBS)",
+        "url": "http://www.iitbbs.ac.in/",
+        "group_name": "IITBBS",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Mandi (IITMANDI)",
+        "url": "http://www.iitmandi.ac.in/",
+        "group_name": "IITMANDI",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Jammu (IITJAMMU)",
+        "url": "https://www.iitjammu.ac.in/",
+        "group_name": "IITJAMMU",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Dhanbad (IITISM)",
+        "url": "https://www.iitism.ac.in/",
+        "group_name": "IITISM",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Hyderabad (IITH)",
+        "url": "https://www.iith.ac.in/",
+        "group_name": "IITH",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Patna (IITP)",
+        "url": "https://www.iitp.ac.in/",
+        "group_name": "IITP",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Bhilai (IITBHILAI)",
+        "url": "https://www.iitbhilai.ac.in/",
+        "group_name": "IITBHILAI",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Dharwad (IITDHARWAD)",
+        "url": "http://www.iitdharwad.ac.in/",
+        "group_name": "IITDHARWAD",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Indore (IITINDORE)",
+        "url": "https://www.iiti.ac.in/",
+        "group_name": "IITINDORE",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    },
+    {
+        "country": "India",
+        "logo": "group_logos/mentifflogo.png",
+        "college": "Indian Institute of Technology, Ropar (IITROPAR)",
+        "url": "http://www.iitrpr.ac.in/",
+        "group_name": "IITROPAR",
+        "admin": [
+            "harshit",
+            "pravesh"
+        ],
+        "members": [
+            {
+                "username": "harshit",
+                "user_type": "admin",
+                "email": "harshitkh9@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "Pathak"
+            },
+            {
+                "username": "pravesh",
+                "user_type": "admin",
+                "email": "jhpravesh@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor1",
+                "user_type": "mentor",
+                "email": "praveshjhanwar@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "J"
+            },
+            {
+                "username": "mentor2",
+                "user_type": "mentor",
+                "email": "snjhanwar014@gmail.com",
+                "first_name": "Pravesh",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentor3",
+                "user_type": "mentor",
+                "email": "satyanarayanjhanwar39@gmail.com",
+                "first_name": "Ankit",
+                "last_name": "Jhanwar"
+            },
+            {
+                "username": "mentee1",
+                "user_type": "mentee",
+                "email": "harshit.pathak2301@gmail.com",
+                "first_name": "Harshit",
+                "last_name": "P"
+            }
+        ]
+    }
+]
