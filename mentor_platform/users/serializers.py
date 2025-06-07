@@ -113,9 +113,9 @@ class MentorSignupSerializer(serializers.ModelSerializer):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://127.0.0.1:3000{reverse('verify_email', args=[token])}"
-        # verification_link = f"http://localhost:3000/register?verify-email?token={token}"
-        verification_link = f"http://localhost:3000/register?verify-email=true&token={token}&user=mentor"
+        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
+        # verification_link = f"http://www.mentiff.com/register?verify-email?token={token}"
+        verification_link = f"http://www.mentiff.com/register?verify-email=true&token={token}&user=mentor"
 
         print(verification_link)
         
@@ -148,10 +148,10 @@ class MenteeSignupSerializer(serializers.ModelSerializer):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://127.0.0.1:3000{reverse('verify_email', args=[token])}"
+        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
         
-        # verification_link = f"http://localhost:3000/verify-email?token={token}"
-        verification_link = f"http://localhost:3000/register?verify-email=true&token={token}&user=mentee"
+        # verification_link = f"http://www.mentiff.com/verify-email?token={token}"
+        verification_link = f"http://www.mentiff.com/register?verify-email=true&token={token}&user=mentee"
 
         print(f"1st time Verification link is: {verification_link}")
 

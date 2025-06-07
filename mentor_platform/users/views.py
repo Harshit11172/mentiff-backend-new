@@ -476,9 +476,9 @@ class ResendVerificationEmailView(generics.GenericAPIView):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://127.0.0.1:3000{reverse('verify_email', args=[token])}"
+        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
 
-        verification_link = f"http://localhost:3000/verify-email?token={token}"
+        verification_link = f"http://www.mentiff.com/verify-email?token={token}"
 
         print(f"Resend Verification link is: {verification_link}")
         
