@@ -6,7 +6,7 @@ from voice_video.models import Booking
 from .serializers import MentorSerializer, MenteeSerializer, FeedbackSerializer, MentorSignupSerializer, MenteeSignupSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ValidationError
-
+from django.conf import settings
 #-------------login-Logout-Signup----------------------------------
 
 from rest_framework import generics, permissions
@@ -476,9 +476,8 @@ class ResendVerificationEmailView(generics.GenericAPIView):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
 
-        verification_link = f"http://www.mentiff.com/verify-email?token={token}"
+        verification_link = f"{settings.API_BASE_URL_FRONTEND}/verify-email?token={token}"
 
         print(f"Resend Verification link is: {verification_link}")
         

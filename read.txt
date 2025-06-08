@@ -1,0 +1,1 @@
+Note: in prod env please add .env variables and client_secret.json file before you run

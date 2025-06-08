@@ -84,3 +84,17 @@ class AccountDetailsCreateUpdateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+# payments/views.py
+
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from .models import MentorEarning
+from .serializers import MentorEarningSerializer
+
+class MentorEarningDetailView(RetrieveAPIView):
+    serializer_class = MentorEarningSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return MentorEarning.objects.get(user=self.request.user)

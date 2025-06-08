@@ -37,3 +37,18 @@ class AccountDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccountDetails
         fields = ['account_holder_name', 'bank_name', 'bank_account_number', 'ifsc_code', 'upi_id', 'user']
+
+
+
+
+# payments/serializers.py
+
+from rest_framework import serializers
+from .models import MentorEarning
+
+class MentorEarningSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+
+    class Meta:
+        model = MentorEarning
+        fields = ['id', 'username', 'balance', 'total_earnings', 'amount_requested', 'updated_at']
