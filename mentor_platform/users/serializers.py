@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 from .models import CustomUser, Mentor, Mentee, Feedback
-
+from django.conf import settings
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -113,9 +113,8 @@ class MentorSignupSerializer(serializers.ModelSerializer):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
-        # verification_link = f"http://www.mentiff.com/register?verify-email?token={token}"
-        verification_link = f"http://www.mentiff.com/register?verify-email=true&token={token}&user=mentor"
+        # verification_link = f"{settings.API_BASE_URL_FRONTEND}/register?verify-email?token={token}"
+        verification_link = f"{settings.API_BASE_URL_FRONTEND}/register?verify-email=true&token={token}&user=mentor"
 
         print(verification_link)
         
@@ -148,10 +147,9 @@ class MenteeSignupSerializer(serializers.ModelSerializer):
         user.save()
 
         # Send verification email
-        # verification_link = f"http://www.mentiff.com{reverse('verify_email', args=[token])}"
         
-        # verification_link = f"http://www.mentiff.com/verify-email?token={token}"
-        verification_link = f"http://www.mentiff.com/register?verify-email=true&token={token}&user=mentee"
+        # verification_link = f"{settings.API_BASE_URL_FRONTEND}/verify-email?token={token}"
+        verification_link = f"{settings.API_BASE_URL_FRONTEND}/register?verify-email=true&token={token}&user=mentee"
 
         print(f"1st time Verification link is: {verification_link}")
 
