@@ -189,10 +189,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+# MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Assuming 'media' is where your images are stored
 
-
+MEDIA_URL = 'https://www.api.mentiff.com/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -269,6 +270,9 @@ CORS_ORIGIN_WHITELIST = [
     'https://mentiff.com',
     'https://www.mentiff.com',
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 CORS_ALLOW_ALL_ORIGINS = bool(env('CORS_ALLOW_ALL_ORIGINS'))  # or set CORS_ALLOWED_ORIGINS
