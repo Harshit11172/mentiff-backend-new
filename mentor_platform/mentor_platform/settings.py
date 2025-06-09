@@ -52,7 +52,7 @@ API_BASE_URL_FRONTEND = env('API_BASE_URL_FRONTEND')
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -275,19 +275,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
-import os
-
-DEBUG = os.getenv('DEBUG', 'False').lower() in ['true', '1']
-
-CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False').lower() in ['true', '1']
-
-if not CORS_ALLOW_ALL_ORIGINS:
-    cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '')
-    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(',') if origin.strip()]
-else:
-    # If allow all is True, no need to set allowed origins
-    CORS_ALLOWED_ORIGINS = []
-
+CORS_ALLOW_ALL_ORIGINS = bool(env('CORS_ALLOW_ALL_ORIGINS'))  # or set CORS_ALLOWED_ORIGINS
 
 
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
