@@ -265,17 +265,14 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Optional: Ensures sessions expire when
 SESSION_COOKIE_AGE = 1209600  # Set session duration (2 weeks)
 
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://mentiff.com',
-    'https://www.mentiff.com',
-]
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
-CORS_ALLOW_ALL_ORIGINS = bool(env('CORS_ALLOW_ALL_ORIGINS'))  # or set CORS_ALLOWED_ORIGINS
+CORS_ALLOW_ALL_ORIGINS = bool(env('CORS_ALLOW_ALL_ORIGINS'))
+
+if not CORS_ALLOW_ALL_ORIGINS:
+    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in env('CORS_ALLOWED_ORIGINS').split(',')]
 
 
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
