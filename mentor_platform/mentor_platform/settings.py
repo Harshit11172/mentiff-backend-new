@@ -270,8 +270,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOW_ALL_ORIGINS = bool(env('CORS_ALLOW_ALL_ORIGINS'))
 
+
+
 if not CORS_ALLOW_ALL_ORIGINS:
     CORS_ALLOWED_ORIGINS = [origin.strip() for origin in env('CORS_ALLOWED_ORIGINS').split(',')]
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.api.mentiff.com',
+    'https://api.mentiff.com',
+    'http://localhost:8000/api/admin/'
+]
+
+
+
+
 
 
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
