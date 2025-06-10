@@ -107,7 +107,6 @@ AUTHENTICATION_BACKENDS = (
 
 
 MIDDLEWARE = [
-    
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,8 +115,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'allauth.account.middleware.AccountMiddleware',  # Add this line
-    
+    'allauth.account.middleware.AccountMiddleware',  # Add this line
+
 ]
 
 
@@ -192,7 +191,7 @@ STATIC_URL = 'static/'
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Assuming 'media' is where your images are stored
 
-MEDIA_URL = 'https://www.api.mentiff.com/media/'
+# MEDIA_URL = 'https://www.api.mentiff.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
