@@ -8,9 +8,11 @@ from datetime import timedelta
 User = get_user_model() 
 
 class GroupListSerializer(serializers.ModelSerializer):
+    message_count = serializers.IntegerField(read_only=True)  # <- this line
+
     class Meta:
         model = Group
-        fields = ['id', 'group_name', 'college', 'logo', 'country', 'url', 'member_count', 'mentor_count', 'mentee_count']
+        fields = ['id', 'group_name', 'college', 'logo', 'country', 'url', 'member_count', 'mentor_count', 'mentee_count', 'message_count']
 
 
 class GroupMessageSerializer(serializers.ModelSerializer):

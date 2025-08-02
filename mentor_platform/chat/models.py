@@ -16,7 +16,7 @@ class Group(models.Model):
 
     def __str__(self):
         return self.college
-
+    
     def update_member_count(self):
         self.member_count = self.members.count()
         self.save()

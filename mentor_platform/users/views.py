@@ -38,6 +38,8 @@ from .models import CustomUser
 from django.utils.crypto import get_random_string
 from django.contrib.auth import get_user_model
 from chat.models import Membership
+from rest_framework.decorators import action
+
 
 User = get_user_model()
 
@@ -167,6 +169,53 @@ class MentorViewSet(viewsets.ModelViewSet):
     serializer_class = MentorSerializer
     permission_classes = [AllowAny]
 
+
+    def get_queryset(self):
+        """
+        Supports filtering mentors via query parameters:
+        - ?country=
+        - ?college=
+        - ?gender=
+        - ?degree=PhD,Masters
+        - ?course=
+        """
+        queryset = super().get_queryset()
+        request = self.request
+
+        country = request.query_params.get("country")
+        college = request.query_params.get("college")
+        # gender = request.query_params.get("gender")
+        degree = request.query_params.get("degree")  # comma-separated string
+        course = request.query_params.get("course")  # optional
+        # date = request.query_params.get("date")  # for future use
+
+        if country:
+            queryset = queryset.filter(country__iexact=country)
+
+        if college:
+            queryset = queryset.filter(university__iexact=college)
+
+        # if gender:
+        #     queryset = queryset.filter(user__gender__iexact=gender)
+
+        if degree:
+            degrees = [d.strip() for d in degree.split(",") if d.strip()]
+            if degrees:
+                queryset = queryset.filter(degree__in=degrees)
+
+        if course:
+            courses = [c.strip() for c in course.split(",") if c.strip()]
+            queryset = queryset.filter(expertise__in=courses)
+
+        # If you plan to filter by availability in the future:
+        # if date:
+        #     # Add logic to filter availability on that date
+        #     pass
+
+        return queryset
+
+
+
     def retrieve(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -174,6 +223,26 @@ class MentorViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except NotFound:
             return Response({"detail": "Mentor not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+    @action(detail=False, methods=['get'], url_path='top')
+    def top_mentors(self, request):
+        """
+        Returns top mentors sorted by number of calls_booked in descending order.
+        Example: /api/users/mentors/top/?limit=4
+        """
+        limit = request.query_params.get('limit', 4)
+
+        try:
+            limit = int(limit)
+        except ValueError:
+            return Response({"detail": "Invalid limit parameter."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Ensure the field exists and query safely
+        top_mentors = Mentor.objects.all().order_by('-calls_booked')[:limit]
+        serializer = self.get_serializer(top_mentors, many=True)
+        return Response(serializer.data)
+
 
 
 class MenteeViewSet(viewsets.ModelViewSet):

@@ -8,6 +8,7 @@ from .views import EmailVerificationView, FeedbackCreateView, MenteeUpdateView
 from .views import CustomAuthToken, RequestOTP
 from django.urls import path
 from .views import UserGroupsView
+from rest_framework.decorators import action
 
 
 

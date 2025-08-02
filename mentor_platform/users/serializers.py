@@ -13,15 +13,21 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class MentorSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()  # Nested serializer to include user details
 
+    feedback_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Mentor
         fields = [
-            'id', 'user', 'phone_number', 'profile_picture', 'university',
+            'id', 'user', 'phone_number', 'profile_picture', 'country' ,'university',
             'degree', 'major', 'year_of_admission', 'college_id', 'expertise',
             'availability', 'session_fee', 'rating', 'entrance_exam_given',
-            'rank', 'score'
+            'rank', 'score', 'calls_booked', 'feedback_count', 'session_time', 'currency', 'about'
         ]
-    
+
+    def get_feedback_count(self, obj):
+        return Feedback.objects.filter(mentor=obj).count()
+
+
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', None)
 

@@ -106,6 +106,10 @@ class Mentor(models.Model):
     
     rating = models.FloatField(default=0.0)
 
+    #add +1 everytime a session is booked
+    ###### THIS LOGIC HAS BEEN NOT IMPLEMENTED YET !!!!!!!!!!!!!!!!!!!!!
+    calls_booked = models.IntegerField(default=0)
+
     # Entrance Exam Info
     entrance_exam_given = models.CharField(max_length=100, blank=True)  # Optional
     rank = models.IntegerField(null=True, blank=True)  # Optional

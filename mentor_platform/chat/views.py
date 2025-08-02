@@ -12,6 +12,9 @@ from rest_framework.views import APIView
 from .models import Group, Membership
 from .serializers import GroupListSerializer, GroupSerializer, MemberDetailSerializer, GroupMessageSerializer
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from django.db.models import Count
+
 from users.models import OTP
 
 
@@ -76,6 +79,31 @@ class GroupListViewSet(viewsets.ReadOnlyModelViewSet):
             self.authentication_classes = [TokenAuthentication]
             return [IsAuthenticated()]
         return []  # Allow public access for listing
+
+
+    @action(detail=False, methods=['get'], url_path='top')
+    def top_groups(self, request):
+        """
+        Returns top groups sorted by number of messages (GroupMessage model).
+        Example: /api/universities/groups/top/?limit=5
+        """
+        limit = request.query_params.get('limit', 10)
+        try:
+            limit = int(limit)
+        except ValueError:
+            return Response({"detail": "Invalid limit parameter."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Annotate each group with the number of messages
+        top_groups = (
+            Group.objects
+            .annotate(message_count=Count('groupmessage'))  # reverse FK: GroupMessage → Group
+            .order_by('-message_count')[:limit]
+        )
+
+        serializer = self.get_serializer(top_groups, many=True)
+        return Response(serializer.data)
+
+    
 
 
 class GroupMembersView(generics.ListAPIView):
