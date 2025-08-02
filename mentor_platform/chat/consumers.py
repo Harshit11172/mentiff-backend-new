@@ -14,76 +14,156 @@ async def get_group_instance(group_id):
     return await database_sync_to_async(Group.objects.get)(id=group_id)
 
 
+# class GroupChatConsumer(AsyncWebsocketConsumer):
+#     async def connect(self):
+
+#         print("New grp request")
+#         print(self)
+
+#         self.group_name = self.scope['url_route']['kwargs']['group_name']
+#         self.user = self.scope["user"]
+
+#         # Join group
+#         await self.channel_layer.group_add(self.group_name, self.channel_name)
+#         await self.accept()
+
+#     async def disconnect(self, close_code):
+#         await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+
+#     async def receive(self, text_data):
+#         text_data_json = json.loads(text_data)
+
+#         try:
+#             group = await get_group_instance(self.group_name)
+#         except ObjectDoesNotExist:
+#             print(f"Group {self.group_name} does not exist.")
+#             return  # Handle this case as needed
+
+#         sender = text_data_json['sender']
+
+#         # Get sender user instance
+#         try:
+#             sender_user = await get_user_instance(sender)
+#         except ObjectDoesNotExist:
+#             print(f"User {sender} does not exist.")
+#             return  # Handle this case as needed
+       
+#         # Save the message to the database
+#         group_message = GroupMessage(
+#             group=group,  # Assuming this is a field in your model
+#             message=text_data_json['message'],
+#             sender=sender_user,
+#             timestamp=text_data_json['timestamp'],
+#             profile_picture=text_data_json.get('profile_picture')  # Use .get() for safety
+#         )
+
+#         await database_sync_to_async(group_message.save)()
+        
+#         # Send message to group
+#         await self.channel_layer.group_send(
+#             self.group_name, 
+#             {
+#                 "message": text_data_json['message'],
+#                 "sender": text_data_json['sender'],
+#                 "timestamp": text_data_json['timestamp'],
+#                 "type": "chat_message",
+#                 "profile_picture" : text_data_json['profile_picture']
+#             })
+
+#     async def chat_message(self, event):
+#         message = event['message']
+#         sender = event['sender']
+
+#         # Send message to WebSocket
+#         await self.send(text_data=json.dumps({
+#             "message": event['message'],
+#       "sender": event['sender'],
+#       "timestamp": event['timestamp'],
+#       "type": "chat_message",
+#       "profile_picture" : event['profile_picture']
+#         }))
+
+
 class GroupChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-
-        print("New grp request")
-        print(self)
-
+        print("New group chat connection")
         self.group_name = self.scope['url_route']['kwargs']['group_name']
         self.user = self.scope["user"]
 
-        # Join group
+        # Join the group channel
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
-
     async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
+        data = json.loads(text_data)
+        msg_type = data.get("type")
 
+        if msg_type == "typing":
+            # Broadcast typing event
+            await self.channel_layer.group_send(
+                self.group_name,
+                {
+                    "type": "typing_event",
+                    "sender": data["sender"]
+                }
+            )
+            return
+
+        # Otherwise, it's a regular message
         try:
             group = await get_group_instance(self.group_name)
         except ObjectDoesNotExist:
             print(f"Group {self.group_name} does not exist.")
-            return  # Handle this case as needed
+            return
 
-        sender = text_data_json['sender']
+        sender_username = data.get('sender')
 
-        # Get sender user instance
         try:
-            sender_user = await get_user_instance(sender)
+            sender_user = await get_user_instance(sender_username)
         except ObjectDoesNotExist:
-            print(f"User {sender} does not exist.")
-            return  # Handle this case as needed
-       
-        # Save the message to the database
+            print(f"User {sender_username} does not exist.")
+            return
+
+        # Save to DB
         group_message = GroupMessage(
-            group=group,  # Assuming this is a field in your model
-            message=text_data_json['message'],
+            group=group,
+            message=data['message'],
             sender=sender_user,
-            timestamp=text_data_json['timestamp'],
-            profile_picture=text_data_json.get('profile_picture')  # Use .get() for safety
+            timestamp=data['timestamp'],
+            profile_picture=data.get('profile_picture')
+        )
+        await database_sync_to_async(group_message.save)()
+
+        # Broadcast to group
+        await self.channel_layer.group_send(
+            self.group_name,
+            {
+                "type": "chat_message",
+                "message": data['message'],
+                "sender": data['sender'],
+                "timestamp": data['timestamp'],
+                "profile_picture": data['profile_picture']
+            }
         )
 
-        await database_sync_to_async(group_message.save)()
-        
-        # Send message to group
-        await self.channel_layer.group_send(
-            self.group_name, 
-            {
-                "message": text_data_json['message'],
-                "sender": text_data_json['sender'],
-                "timestamp": text_data_json['timestamp'],
-                "type": "chat_message",
-                "profile_picture" : text_data_json['profile_picture']
-            })
-
     async def chat_message(self, event):
-        message = event['message']
-        sender = event['sender']
-
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            "message": event['message'],
-      "sender": event['sender'],
-      "timestamp": event['timestamp'],
-      "type": "chat_message",
-      "profile_picture" : event['profile_picture']
+            "type": "chat_message",
+            "message": event["message"],
+            "sender": event["sender"],
+            "timestamp": event["timestamp"],
+            "profile_picture": event["profile_picture"]
         }))
 
+    async def typing_event(self, event):
+        await self.send(text_data=json.dumps({
+            "type": "typing",
+            "sender": event["sender"]
+        }))
 
 class PrivateChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
