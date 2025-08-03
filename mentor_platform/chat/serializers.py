@@ -86,6 +86,7 @@ class MembershipSerializer(serializers.ModelSerializer):
         # Include mentor-specific fields if user_type is 'mentor'
         if instance.user.user_type == 'mentor':
             # Adding mentor-specific fields
+            representation['mentor_id'] = instance.user.mentor_profile.id  # Expertise area
             representation['expertise'] = instance.user.mentor_profile.expertise  # Expertise area
             representation['session_fee'] = instance.user.mentor_profile.session_fee  # Fee for sessions
             representation['session_time'] = instance.user.mentor_profile.session_time  # sessions time
