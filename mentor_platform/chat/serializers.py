@@ -24,28 +24,28 @@ class GroupMessageSerializer(serializers.ModelSerializer):
         fields = ['group', 'sender', 'message', 'timestamp', 'profile_picture']
 
 
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
 
-        # Format timestamp
-        timestamp = instance.timestamp
-        now = timezone.now()
-        diff = now - timestamp
+    #     # Format timestamp
+    #     timestamp = instance.timestamp
+    #     now = timezone.now()
+    #     diff = now - timestamp
 
-        if diff < timedelta(minutes=1):
-            formatted_time = "Just now"
-        elif diff < timedelta(hours=1):
-            minutes_ago = diff.seconds // 60
-            formatted_time = f"{minutes_ago} minutes ago"
-        elif timestamp.date() == now.date():
-            formatted_time = f"Today at {timestamp.strftime('%I:%M %p')}"
-        elif timestamp.date() == (now - timedelta(days=1)).date():
-            formatted_time = f"Yesterday at {timestamp.strftime('%I:%M %p')}"
-        else:
-            formatted_time = timestamp.strftime('%B %d, %Y at %I:%M %p')  # Include time
+    #     if diff < timedelta(minutes=1):
+    #         formatted_time = "Just now"
+    #     elif diff < timedelta(hours=1):
+    #         minutes_ago = diff.seconds // 60
+    #         formatted_time = f"{minutes_ago} minutes ago"
+    #     elif timestamp.date() == now.date():
+    #         formatted_time = f"Today at {timestamp.strftime('%I:%M %p')}"
+    #     elif timestamp.date() == (now - timedelta(days=1)).date():
+    #         formatted_time = f"Yesterday at {timestamp.strftime('%I:%M %p')}"
+    #     else:
+    #         formatted_time = timestamp.strftime('%B %d, %Y at %I:%M %p')  # Include time
 
-        representation['timestamp'] = formatted_time  # Update the formatted timestamp
-        return representation
+    #     representation['display_timestamp'] = formatted_time  # Update the formatted timestamp
+    #     return representation
 
 
 class UserSerializer(serializers.ModelSerializer):
