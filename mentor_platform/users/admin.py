@@ -3,6 +3,11 @@
 from django.contrib import admin
 from .models import CustomUser, Mentor, Mentee, Feedback
 
+from .models import Post, Comment
+
+admin.site.register(Post)
+admin.site.register(Comment)
+
 class CustomUserAdmin(admin.ModelAdmin):
     list_display = ('id','username', 'email', 'user_type', 'is_active')
     search_fields = ('username', 'email')
@@ -28,3 +33,6 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Mentor, MentorAdmin)
 admin.site.register(Mentee, MenteeAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
+
+
+

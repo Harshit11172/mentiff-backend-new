@@ -600,3 +600,60 @@ class UserGroupsView(View):
 
         # Return the groups as a JSON response
         return JsonResponse({"username": username, "groups": list(groups)})
+
+
+
+from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .models import Post, Comment
+from .serializers import PostSerializer, CommentSerializer
+
+
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    serializer_class = PostSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        mentor_id = self.request.query_params.get("mentor_id")
+        if mentor_id:
+            return Post.objects.filter(mentor_id=mentor_id).order_by("-created_at")
+        return Post.objects.none()
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if hasattr(user, 'mentor_profile'):
+            serializer.save(mentor=user.mentor_profile)
+
+    @action(detail=True, methods=["post"], url_path='like', url_name='like')
+    def like(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        if post.likes.filter(id=user.id).exists():
+            post.likes.remove(user)
+            return Response({"liked": False})
+        else:
+            post.likes.add(user)
+            return Response({"liked": True})
+
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        post_id = self.request.query_params.get("post_id")
+        return Comment.objects.filter(post_id=post_id).order_by("created_at")
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+
+
+
+
+

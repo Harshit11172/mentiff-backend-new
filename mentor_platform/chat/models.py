@@ -58,6 +58,7 @@ class GroupMessage(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+    
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)  # Add this line
 
     

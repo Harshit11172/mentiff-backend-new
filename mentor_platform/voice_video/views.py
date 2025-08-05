@@ -9,6 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.mail import send_mail
 from django.urls import reverse
 
+
+
 class TokenGenerationView(generics.GenericAPIView):
 
     # permission_classes = [IsAuthenticated]  # Only allow authenticated users
@@ -33,6 +35,9 @@ class TokenGenerationView(generics.GenericAPIView):
         )
 
         return Response({"token": token})
+
+
+
 
 class CallViewSet(viewsets.ViewSet):
 
@@ -299,7 +304,7 @@ class BookingCreateView(generics.CreateAPIView):
             booking.call_link = meet_link
             booking.status = 'confirmed'
             booking.save(update_fields=['call_link', 'status'])
-
+ 
         except Mentee.DoesNotExist:
             raise serializers.ValidationError("Mentee does not exist.")
         except Mentor.DoesNotExist:

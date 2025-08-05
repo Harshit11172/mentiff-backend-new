@@ -170,3 +170,42 @@ class MenteeSignupSerializer(serializers.ModelSerializer):
         return user
 
 
+
+
+from rest_framework import serializers
+from .models import Post, Comment
+
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author_username = serializers.CharField(source="author.username", read_only=True)
+    author_image = serializers.ImageField(source="author.profile_picture", read_only=True)
+
+
+    class Meta:
+        model = Comment
+        fields = ["id", "post", "author", "author_username", "author_image",  "text", "created_at"]  # ✅ include post
+        read_only_fields = ["id", "author", "author_username", "author_image", "created_at"]
+
+
+
+class PostSerializer(serializers.ModelSerializer):
+    mentor_name = serializers.CharField(source="mentor.user.username", read_only=True)
+    mentor_image = serializers.ImageField(source="mentor.user.profile_picture", read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+    likes_count = serializers.SerializerMethodField()
+    liked_by_user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ["id", "mentor", "mentor_name", "mentor_image", "content", "created_at", "likes_count", "liked_by_user", "comments"]
+
+    def get_likes_count(self, obj):
+        return obj.likes.count()
+
+    def get_liked_by_user(self, obj):
+        user = self.context.get("request").user
+        return user in obj.likes.all() if user.is_authenticated else False
+
+
+
