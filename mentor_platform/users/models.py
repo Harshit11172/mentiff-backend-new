@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import JSONField  # If using PostgreSQL
 from django.core.exceptions import ValidationError
 import re
+from datetime import time
 
 
 class CustomUser(AbstractUser):
@@ -61,7 +62,6 @@ class Mentor(models.Model):
       "Sunday": ["8:00 PM - 8:20 PM", "8:20 PM - 8:40 PM", "8:40 PM - 9:00 PM", "9:00 PM - 9:20 PM", "9:20 PM - 9:40 PM", "9:40 PM - 10:00 PM"]
     }
 
-
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='mentor_profile')
     phone_number = models.CharField(max_length=15, blank=True)  # Optional
     profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default_dp.jpg', null=True, blank=True)
@@ -85,24 +85,18 @@ class Mentor(models.Model):
     # Mentorship Information
     expertise = models.CharField(max_length=255, blank=True)  # Optional
 
-    # available_days = models.JSONField(default=list, blank=True)  # Store days as a list
-    # # Sample input for available_days["Monday", "Tuesday", "Wednesday"]
-
-    # available_hours = JSONField(default=list, blank=True)  # Store time slots as a list
-    # # Sample input for available_hours["10am-11am", "1pm-2pm", "12pm-1am"]
-
     availability = JSONField(default=default_availability, blank=True)  # Store availability as a dict
     
     # session_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Optional   ######
     
-    session_fee = models.DecimalField(
-        max_digits=10, 
-        decimal_places=2, 
-        default=200.00
-    )  # Default set to 200 INR
+    # session_fee = models.DecimalField(
+    #     max_digits=10, 
+    #     decimal_places=2, 
+    #     default=200.00
+    # )  # Default set to 200 INR
 
-    session_time = models.CharField(max_length=50, default='30 Mins') 
-    currency = models.CharField(max_length=3, default='INR')  # Store currency code (e.g., 'INR', 'USD')
+    # session_time = models.CharField(max_length=50, default='30 Mins') 
+    # currency = models.CharField(max_length=3, default='INR')  # Store currency code (e.g., 'INR', 'USD')
     
     rating = models.FloatField(default=0.0)
 
@@ -115,28 +109,60 @@ class Mentor(models.Model):
     rank = models.IntegerField(null=True, blank=True)  # Optional
     score = models.FloatField(null=True, blank=True)  # Optional
 
-    def clean(self):
-        # Custom validation for available days
-        # valid_days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
-        # if self.available_days:
-        #     for day in self.available_days:
-        #         if day not in valid_days:
-        #             raise ValidationError(f"Invalid day: {day}. Each day must be one of {', '.join(valid_days)}.")
-        # else:
-        #     self.available_days = []
 
-        # Custom validation for available hours
-        # if self.available_hours:
-        #     for slot in self.available_hours:
-        #         if not re.match(r"^\d{1,2}(am|pm)-\d{1,2}(am|pm)$", slot):
-        #             raise ValidationError("Each time slot must be in the format '10am-11am'.")
-        # else:
-        #     self.available_hours = []
+    def get_slots_for_date(self, date, slot_length_minutes=None):
+        from datetime import datetime, timedelta
+        slot_length = slot_length_minutes or self.default_session_duration
+        slots = []
 
+        availabilities = self.availabilities.filter(day_of_week=date.weekday())
+        existing_bookings = self.bookings.filter(
+            start_datetime__date=date,
+            status__in=['pending', 'confirmed']
+        )
+        booked_ranges = [(b.start_datetime.time(), b.end_datetime.time()) for b in existing_bookings]
 
-        # Custom validation to ensure session_fee is at least 200
-        if self.session_fee is not None and self.session_fee < 200:
-            raise ValidationError("Session fee must be at least 200 INR.")
+        for availability in availabilities:
+            start = datetime.combine(date, availability.start_time)
+            end = datetime.combine(date, availability.end_time)
+
+            while start + timedelta(minutes=slot_length) <= end:
+                slot_start = start
+                slot_end = start + timedelta(minutes=slot_length)
+
+                if not any(booked_start <= slot_start.time() < booked_end for booked_start, booked_end in booked_ranges):
+                    slots.append({"start": slot_start, "end": slot_end})
+
+                start = slot_end
+        return slots
+    
+    
+    def save(self, *args, **kwargs):
+        # Save the mentor first to get an ID (needed for availability)
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+
+        if is_new:
+            # Create default availability for weekdays
+            weekday_hours = [
+                (0, time(19, 0), time(23, 30)),  # Monday 7 PM - 12 AM
+                (1, time(19, 0), time(23, 30)),
+                (2, time(19, 0), time(23, 30)),
+                (3, time(19, 0), time(23, 30)),
+                (4, time(19, 0), time(23, 30)),
+                # Weekend hours
+                (5, time(10, 0), time(23, 30)),  # Saturday 10 AM - 12 PM
+                (6, time(10, 0), time(23, 30)),  # Sunday 10 AM - 12 PM
+            ]
+
+            for day, start, end in weekday_hours:
+                MentorAvailability.objects.create(
+                    mentor=self,
+                    day_of_week=day,
+                    start_time=start,
+                    end_time=end
+                )
+
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name} - {self.user.username}"
@@ -144,6 +170,67 @@ class Mentor(models.Model):
     class Meta:
         verbose_name = "Mentor"
         verbose_name_plural = "Mentors"
+
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class SessionOption(models.Model):
+    mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE, related_name="session_options")
+    duration_minutes = models.PositiveIntegerField()  # e.g., 20, 30, 60
+    fee = models.DecimalField(max_digits=10, decimal_places=2)  # price for this duration
+    currency = models.CharField(max_length=3, default="INR")
+
+    class Meta:
+        unique_together = ("mentor", "duration_minutes")
+
+    def clean(self):
+        if self.fee < 200:
+            raise ValidationError("Session fee must be at least 200 INR.")
+
+    def __str__(self):
+        return f"{self.mentor.user.username} - {self.duration_minutes} mins @ {self.fee} {self.currency}"
+
+
+# --- Signal to create default session options ---
+@receiver(post_save, sender=Mentor)
+def create_default_session_options(sender, instance, created, **kwargs):
+    if created:
+        defaults = [
+            {"duration_minutes": 15, "fee": 200, "currency": "INR"},
+            {"duration_minutes": 30, "fee": 300, "currency": "INR"},
+        ]
+        for option in defaults:
+            SessionOption.objects.get_or_create(
+                mentor=instance,
+                duration_minutes=option["duration_minutes"],
+                defaults={"fee": option["fee"], "currency": option["currency"]},
+            )
+
+
+
+
+class MentorAvailability(models.Model):
+    mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE, related_name="availabilities")
+    # day_of_week = models.IntegerField(choices=[
+    #     (0, "Monday"), (1, "Tuesday"), (2, "Wednesday"),
+    #     (3, "Thursday"), (4, "Friday"), (5, "Saturday"), (6, "Sunday")
+    # ])
+    day_of_week = models.IntegerField(choices=[
+    (0, "Sunday"), (1, "Monday"), (2, "Tuesday"),
+    (3, "Wednesday"), (4, "Thursday"),
+    (5, "Friday"), (6, "Saturday")
+])
+    start_time = models.TimeField(null=True, blank=True)
+    end_time = models.TimeField(null=True, blank=True)
+
+    def __str__(self):
+        if self.start_time and self.end_time:
+            return f"{self.mentor.user.username} - {self.get_day_of_week_display()} {self.start_time} to {self.end_time}"
+        else:
+            return f"{self.mentor.user.username} - {self.get_day_of_week_display()} No slot"
+
+
 
 
 class Mentee(models.Model):
@@ -180,15 +267,25 @@ class Mentee(models.Model):
         verbose_name_plural = "Mentees"
 
 
+
+
 class Feedback(models.Model):
     mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE)
-    mentee = models.ForeignKey(Mentee, on_delete=models.CASCADE, related_name='feedbacks')  # Change 'feedback' to 'feedbacks'
+    mentee = models.ForeignKey(Mentee, on_delete=models.CASCADE, related_name='feedbacks')
     session_date = models.DateTimeField()
-    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])  # Rating from 1 to 5
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
     comments = models.TextField(blank=True)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_visible = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('mentor', 'mentee', 'session_date')
+
     def __str__(self):
         return f"Feedback from {self.mentee.user.username} for {self.mentor.user.username} on {self.session_date}"
+
+
 
 
 
@@ -200,6 +297,8 @@ class OTP(models.Model):
 
     def __str__(self):
         return f"OTP {self.code} for {self.user.username}"
+
+
 
 
 
@@ -217,6 +316,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post by {self.mentor.user.username} at {self.created_at}"
+
+
+
 
 
 class Comment(models.Model):

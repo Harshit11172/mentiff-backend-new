@@ -119,6 +119,8 @@ MIDDLEWARE = [
 
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'cached_db'
+
 
 ROOT_URLCONF = 'mentor_platform.urls'
 
@@ -139,6 +141,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mentor_platform.wsgi.application'
+
+
+
+GOOGLE_SERVICE_ACCOUNT_FILE = BASE_DIR / "mentor_platform" / "keys" / "mentiff-calendar.json"
 
 
 # Database

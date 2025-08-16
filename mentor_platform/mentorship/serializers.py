@@ -3,6 +3,20 @@
 from rest_framework import serializers
 from .models import Session
 
+from rest_framework import serializers
+from users.models import MentorAvailability
+
+
+class MentorAvailabilitySerializer(serializers.ModelSerializer):
+    day_of_week_display = serializers.CharField(source='get_day_of_week_display', read_only=True)
+
+    class Meta:
+        model = MentorAvailability
+        fields = ['id', 'day_of_week', 'day_of_week_display', 'start_time', 'end_time']
+
+
+
+
 class SessionSerializer(serializers.ModelSerializer):
     payment_reference = serializers.CharField(write_only=True)
     end_time = serializers.SerializerMethodField()  # ✅ Tell DRF it's a computed field

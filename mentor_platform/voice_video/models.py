@@ -18,6 +18,22 @@ from googleapiclient.discovery import build
 from twilio.rest import Client 
 
 
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+# NOT NEEDED NOW AS CREATED MODEL UNDER MENTORSHIP APP
+
+
 class Booking(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -39,3 +55,5 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking with {self.mentor} and {self.mentee} at {self.scheduled_time}"
+    
+

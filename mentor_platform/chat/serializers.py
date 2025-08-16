@@ -88,9 +88,9 @@ class MembershipSerializer(serializers.ModelSerializer):
             # Adding mentor-specific fields
             representation['mentor_id'] = instance.user.mentor_profile.id  # Expertise area
             representation['expertise'] = instance.user.mentor_profile.expertise  # Expertise area
-            representation['session_fee'] = instance.user.mentor_profile.session_fee  # Fee for sessions
-            representation['session_time'] = instance.user.mentor_profile.session_time  # sessions time
-            representation['currency'] = instance.user.mentor_profile.currency  # currency
+            # representation['session_fee'] = instance.user.mentor_profile.session_fee  # Fee for sessions
+            # representation['session_time'] = instance.user.mentor_profile.session_time  # sessions time
+            # representation['currency'] = instance.user.mentor_profile.currency  # currency
             representation['university'] = instance.user.mentor_profile.university  # University name
             representation['degree'] = instance.user.mentor_profile.degree  # Degree obtained
             representation['major'] = instance.user.mentor_profile.major  # Major subject

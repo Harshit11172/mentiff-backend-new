@@ -20,13 +20,14 @@ class MentorSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 'phone_number', 'profile_picture', 'country' ,'university',
             'degree', 'major', 'year_of_admission', 'college_id', 'expertise',
-            'availability', 'session_fee', 'rating', 'entrance_exam_given',
-            'rank', 'score', 'calls_booked', 'feedback_count', 'session_time', 'currency', 'about'
+            'availability', 'rating', 'entrance_exam_given',
+            'rank', 'score', 'calls_booked', 'feedback_count', 'about'
         ]
+            
 
     def get_feedback_count(self, obj):
         return Feedback.objects.filter(mentor=obj).count()
-
+    
 
     def update(self, instance, validated_data):
         user_data = validated_data.pop('user', None)
@@ -63,13 +64,27 @@ class MenteeSerializer(serializers.ModelSerializer):
 
 
 
+from rest_framework import serializers
+from .models import Feedback, Mentor
+
 class FeedbackSerializer(serializers.ModelSerializer):
     mentor = serializers.PrimaryKeyRelatedField(queryset=Mentor.objects.all())
-    mentee = serializers.PrimaryKeyRelatedField(read_only=True)  # Make mentee read-only
+    mentee = serializers.PrimaryKeyRelatedField(read_only=True)  # Mentee set automatically in view
 
     class Meta:
         model = Feedback
-        fields = ['id', 'mentor', 'mentee', 'session_date', 'rating', 'comments']
+        fields = [
+            'id',
+            'mentor',
+            'mentee',
+            'session_date',
+            'rating',
+            'comments',
+            'created_at',
+            'updated_at',
+            'is_visible'
+        ]
+        read_only_fields = ['created_at', 'updated_at', 'is_visible']
 
 
 ##-------login/logout/signup---------
@@ -208,4 +223,29 @@ class PostSerializer(serializers.ModelSerializer):
         return user in obj.likes.all() if user.is_authenticated else False
 
 
+
+
+
+from .models import MentorAvailability, Mentor
+
+# Serializer for MentorAvailability model
+class MentorAvailabilitySerializer(serializers.ModelSerializer):
+    
+    day_of_week_display = serializers.CharField(source='get_day_of_week_display', read_only=True)
+
+    class Meta:
+        model = MentorAvailability
+        fields = ['id', 'mentor', 'day_of_week', 'day_of_week_display', 'start_time', 'end_time']
+        read_only_fields = ['mentor']
+
+
+from rest_framework import serializers
+from .models import SessionOption
+
+class SessionOptionSerializer(serializers.ModelSerializer):
+    mentor_name = serializers.CharField(source="mentor.user.username", read_only=True)
+
+    class Meta:
+        model = SessionOption
+        fields = ["id", "mentor", "mentor_name", "duration_minutes", "fee", "currency"]
 

@@ -28,7 +28,6 @@ class Transaction(models.Model):
 
 
 
-
 from django.db import models
 from users.models import CustomUser  # Import your custom user model
 
@@ -39,7 +38,6 @@ class AccountDetails(models.Model):
     bank_account_number = models.CharField(max_length=30)
     ifsc_code = models.CharField(max_length=15)
     upi_id = models.CharField(max_length=100, blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

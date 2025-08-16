@@ -269,49 +269,76 @@ class MenteeUpdateView(generics.UpdateAPIView):
     serializer_class = MenteeSerializer
 
 
+from rest_framework import viewsets, generics, status
+from rest_framework.exceptions import ValidationError, PermissionDenied
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Feedback, Mentor, Mentee
+from .serializers import FeedbackSerializer
+
+
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.user_type == 'mentee':
+            return Feedback.objects.filter(mentee=user.mentee_profile)
+        elif user.user_type == 'mentor':
+            return Feedback.objects.filter(mentor=user.mentor_profile)
+        return Feedback.objects.none()
 
 
 class FeedbackCreateView(generics.CreateAPIView):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
-    # permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         user = self.request.user
-        print(f"User: {user.username}, User Type: {user.user_type}")
 
         if user.user_type != 'mentee':
-            raise ValueError("User is not a mentee.")
+            raise PermissionDenied("Only mentees can submit feedback.")
 
-        print(self.request.user.mentee_profile)
-        
         try:
             mentee = user.mentee_profile
-
-            # Get mentor from the request data
-            mentor = self.request.data.get('mentor')
-            if not mentor:
-                raise ValidationError("Mentor ID is required.")
-
-            try:
-                mentor = Mentor.objects.get(id=mentor)
-            except Mentor.DoesNotExist:
-                raise ValidationError("Mentor not found.")
-
-            # Check for completed bookings associated with the mentee and mentor
-            completed_bookings = Booking.objects.filter(mentee=mentee, mentor=mentor, status='completed')
-            if not completed_bookings.exists():
-                raise ValidationError("You have no completed bookings with this mentor for feedback.")
-
-            # Save feedback with the specified mentor
-            serializer.save(mentee=mentee, mentor=mentor)
-
         except Mentee.DoesNotExist:
             raise ValidationError("You do not have an associated Mentee profile.")
-        
+
+        mentor_id = self.request.data.get('mentor')
+        if not mentor_id:
+            raise ValidationError("Mentor ID is required.")
+
+        try:
+            mentor = Mentor.objects.get(id=mentor_id)
+        except Mentor.DoesNotExist:
+            raise ValidationError("Mentor not found.")
+
+        # Check for completed bookings
+        completed_bookings = Booking.objects.filter(
+            mentee=mentee,
+            mentor=mentor,
+            status='completed'
+        )
+
+        if not completed_bookings.exists():
+            raise ValidationError("You must complete a session with this mentor before giving feedback.")
+
+        # Check if feedback already exists for this mentor + mentee + session (optional)
+        session_date = self.request.data.get('session_date')
+        if session_date:
+            existing_feedback = Feedback.objects.filter(
+                mentor=mentor,
+                mentee=mentee,
+                session_date=session_date
+            ).exists()
+            if existing_feedback:
+                raise ValidationError("You’ve already submitted feedback for this session.")
+
+        serializer.save(mentee=mentee, mentor=mentor)
 
 
 User = get_user_model()
@@ -607,7 +634,7 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Post, Comment
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostSerializer, CommentSerializer, MentorAvailabilitySerializer
 
 
 
@@ -654,6 +681,87 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 
+from .models import MentorAvailability, Mentor
+from django.shortcuts import get_object_or_404
+
+
+# ViewSet to list, create, update, and delete availabilities for a mentor
+class MentorAvailabilityViewSet(viewsets.ModelViewSet):
+    serializer_class = MentorAvailabilitySerializer
+    queryset = MentorAvailability.objects.all()
+                            
+    def get_queryset(self):
+        # Filter by mentor if provided in URL kwargs
+        mentor_id = self.kwargs.get('mentor_pk') or self.request.query_params.get('mentor_id')
+        if mentor_id:
+            return self.queryset.filter(mentor_id=mentor_id).order_by('day_of_week', 'start_time')
+        return self.queryset.none()
+
+    def perform_create(self, serializer):
+        mentor_id = self.kwargs.get('mentor_pk') or self.request.data.get('mentor')
+        mentor = get_object_or_404(Mentor, pk=mentor_id)
+        serializer.save(mentor=mentor)
+
+    @action(detail=False, methods=['put', 'patch'], url_path='bulk-update')
+    def bulk_update(self, request, mentor_pk=None):
+        """
+        Custom action to update multiple availability entries in one request.
+        Accepts list of availabilities with id or new ones without id.
+        """
+        availabilities = request.data.get('availabilities', [])
+        if not isinstance(availabilities, list):
+            return Response({'detail': 'availabilities must be a list'}, status=status.HTTP_400_BAD_REQUEST)
+
+        response_data = []
+        for item in availabilities:
+            avail_id = item.get('id', None)
+            # If id exists, update, else create new
+            if avail_id:
+                try:
+                    availability = MentorAvailability.objects.get(id=avail_id, mentor_id=mentor_pk)
+                except MentorAvailability.DoesNotExist:
+                    continue  # Or handle error differently
+                serializer = self.get_serializer(availability, data=item, partial=True)
+            else:
+                item['mentor'] = mentor_pk
+                serializer = self.get_serializer(data=item)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            response_data.append(serializer.data)
+        return Response(response_data)
 
 
 
+from rest_framework import viewsets, permissions, decorators, response
+from .models import SessionOption
+from .serializers import SessionOptionSerializer
+
+
+# Now you’ll get:
+
+# /api/session-options/mentor/5/ → all options for mentor with id=5
+
+# /api/session-options/ → all session options (default list endpoint)
+
+# /api/session-options/<pk>/ → a single session option (still works)
+
+class SessionOptionViewSet(viewsets.ModelViewSet):
+    queryset = SessionOption.objects.all()
+    serializer_class = SessionOptionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        # still allow filtering with ?mentor_id=
+        mentor_id = self.request.query_params.get("mentor_id")
+        if mentor_id:
+            return self.queryset.filter(mentor_id=mentor_id)
+        return self.queryset
+
+    @decorators.action(detail=False, url_path="mentor/(?P<mentor_id>[^/.]+)")
+    def by_mentor(self, request, mentor_id=None):
+        """Return all session options for a given mentor ID"""
+        sessions = self.queryset.filter(mentor_id=mentor_id)
+        serializer = self.get_serializer(sessions, many=True)
+        return response.Response(serializer.data)
+
+    

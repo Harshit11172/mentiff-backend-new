@@ -59,3 +59,6 @@ class Session(models.Model):
                     total_amount=self.amount_paid
                 )
         super().save(*args, **kwargs)
+
+
+

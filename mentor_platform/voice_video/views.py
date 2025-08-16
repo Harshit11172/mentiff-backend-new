@@ -178,32 +178,6 @@ from rest_framework import generics, serializers
 
 
 
-
-# class BookingCreateView(generics.CreateAPIView):
-#     queryset = Booking.objects.all()    
-#     serializer_class = BookingSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def perform_create(self, serializer):
-#         print("api hit for booking create")
-#         mentee_id = self.request.data.get('mentee')
-#         mentor_id = self.request.data.get('mentor')
-#         print("found mentee and mentor id")
-
-#         try:
-#             mentee = Mentee.objects.get(id=mentee_id)
-#             mentor = Mentor.objects.get(id=mentor_id)
-#             serializer.save(mentee=mentee, mentor=mentor)
-#         except Mentee.DoesNotExist:
-#             raise serializers.ValidationError("Mentee does not exist.")
-#         except Mentor.DoesNotExist:
-#             raise serializers.ValidationError("Mentor does not exist.")
-
-
-
-
-
-
 class BookingListView(generics.ListAPIView):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
@@ -238,32 +212,130 @@ class CallView(View):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 # views.py
 
 from django.conf import settings
-from .utils.google_calendar import create_google_calendar_event
+from .utils.google_calendar import create_google_calendar_event, CalendarConflictError
 from datetime import datetime, timedelta
 
 
+# class BookingCreateView_V1_NeedDomain(generics.CreateAPIView):
+#     queryset = Booking.objects.all()    
+#     serializer_class = BookingSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def perform_create(self, serializer):
+#         print("API hit for booking create")
+#         mentee_id = self.request.data.get('mentee')
+#         mentor_id = self.request.data.get('mentor')
+
+#         try:
+#             mentee = Mentee.objects.get(id=mentee_id)
+#             mentor = Mentor.objects.get(id=mentor_id)
+#             print(mentee, mentor)
+
+#             print(mentor.google_refresh_token)
+            
+#             # if not mentor.google_refresh_token:
+#             #     raise serializers.ValidationError("Mentor has not connected Google Calendar.")
+
+#             booking = serializer.save(mentee=mentee, mentor=mentor)
+
+#             print("Booking create started")
+
+#             # Use actual scheduled time from booking
+#             start_time = booking.scheduled_time
+#             end_time = start_time + timedelta(minutes=booking.duration)
+
+#             print(start_time, end_time)
+
+#             meet_link = create_google_calendar_event(
+#                 summary="Mentorship Session",
+#                 start_time=start_time,
+#                 end_time=end_time,
+#                 attendees=[mentee.user.email, mentor.user.email]
+#                 # refresh_token=mentor.google_refresh_token,
+#                 # client_id=settings.GOOGLE_CLIENT_ID,
+#                 # client_secret=settings.GOOGLE_CLIENT_SECRET
+#             )
+            
+
+#             booking.call_link = meet_link
+#             booking.status = 'confirmed'
+#             booking.save(update_fields=['call_link', 'status'])
+ 
+#         except Mentee.DoesNotExist:
+#             raise serializers.ValidationError("Mentee does not exist.")
+#         except Mentor.DoesNotExist:
+#             raise serializers.ValidationError("Mentor does not exist.")
+
+
+
+
+
+# class BookingCreateView(generics.CreateAPIView):
+#     queryset = Booking.objects.all()    
+#     serializer_class = BookingSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def perform_create(self, serializer):
+#         print("API hit for booking create")
+#         mentee_id = self.request.data.get('mentee')
+#         mentor_id = self.request.data.get('mentor')
+
+#         try:
+#             mentee = Mentee.objects.get(id=mentee_id)
+#             mentor = Mentor.objects.get(id=mentor_id)
+#             print(mentee, mentor)
+
+#             print(mentor.google_refresh_token)
+            
+#             if not mentor.google_refresh_token:
+#                 raise serializers.ValidationError("Mentor has not connected Google Calendar.")
+
+#             booking = serializer.save(mentee=mentee, mentor=mentor)
+
+#             print("Booking create started")
+
+#             # Use actual scheduled time from booking
+#             start_time = booking.scheduled_time
+#             end_time = start_time + timedelta(minutes=booking.duration)
+
+#             print(start_time, end_time)
+
+#             meet_link = create_google_calendar_event(
+#                 summary="Mentorship Session",
+#                 start_time=start_time,
+#                 end_time=end_time,
+#                 attendees=[mentee.user.email, mentor.user.email],
+#                 refresh_token=mentor.google_refresh_token,
+#                 client_id=settings.GOOGLE_CLIENT_ID,
+#                 client_secret=settings.GOOGLE_CLIENT_SECRET
+#             )
+            
+
+#             booking.call_link = meet_link
+#             booking.status = 'confirmed'
+#             booking.save(update_fields=['call_link', 'status'])
+ 
+#         except Mentee.DoesNotExist:
+#             raise serializers.ValidationError("Mentee does not exist.")
+#         except Mentor.DoesNotExist:
+#             raise serializers.ValidationError("Mentor does not exist.")
+
+
+
+
+from rest_framework import generics, serializers
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Booking, Mentee, Mentor
+from .serializers import BookingSerializer
+
+
 class BookingCreateView(generics.CreateAPIView):
-    queryset = Booking.objects.all()    
+    queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [IsAuthenticated]
 
@@ -280,35 +352,66 @@ class BookingCreateView(generics.CreateAPIView):
             if not mentor.google_refresh_token:
                 raise serializers.ValidationError("Mentor has not connected Google Calendar.")
 
-            booking = serializer.save(mentee=mentee, mentor=mentor)
-
-            print("Booking create started")
-
             # Use actual scheduled time from booking
-            start_time = booking.scheduled_time
-            end_time = start_time + timedelta(minutes=booking.duration)
+            scheduled_time = serializer.validated_data.get("scheduled_time")
+            duration = serializer.validated_data.get("duration")
+            start_time = scheduled_time
+            
+            now = timezone.now()
 
-            print(start_time, end_time)
+            # Earliest and latest allowed booking times
+            min_allowed_time = now + timedelta(hours=6)
+            max_allowed_time = now + timedelta(days=7)
 
-            meet_link = create_google_calendar_event(
-                summary="Mentorship Session",
-                start_time=start_time,
-                end_time=end_time,
-                attendees=[mentee.user.email, mentor.user.email],
-                refresh_token=mentor.google_refresh_token,
-                client_id=settings.GOOGLE_CLIENT_ID,
-                client_secret=settings.GOOGLE_CLIENT_SECRET
-            )
+            if start_time < min_allowed_time:
+                raise serializers.ValidationError(
+                    "Bookings must be scheduled at least 6 hours in advance."
+                )
+            if start_time > max_allowed_time:
+                raise serializers.ValidationError(
+                    "Bookings cannot be scheduled more than 7 days in advance."
+                )
+
+
+            end_time = start_time + timedelta(minutes=duration)
+            
             
 
-            booking.call_link = meet_link
-            booking.status = 'confirmed'
-            booking.save(update_fields=['call_link', 'status'])
- 
+            print(f"Checking booking from {start_time} to {end_time}")
+
+            try:
+                meet_link = create_google_calendar_event(
+                    summary="Mentorship Session",
+                    start_time=start_time,
+                    end_time=end_time,
+                    attendees=[mentee.user.email, mentor.user.email],
+                    refresh_token=mentor.google_refresh_token,
+                    client_id=settings.GOOGLE_CLIENT_ID,
+                    client_secret=settings.GOOGLE_CLIENT_SECRET
+                )
+            except CalendarConflictError as e:
+                raise serializers.ValidationError(str(e))
+
+            # Save booking after Google event is created
+            booking = serializer.save(
+                mentee=mentee,
+                mentor=mentor,
+                call_link=meet_link,
+                status='confirmed'
+            )
+
+            print("Booking confirmed:", booking)
+
         except Mentee.DoesNotExist:
             raise serializers.ValidationError("Mentee does not exist.")
         except Mentor.DoesNotExist:
             raise serializers.ValidationError("Mentor does not exist.")
+
+
+
+
+
+
 
 # /////////////////////////////////
 
@@ -327,24 +430,6 @@ import google_auth_oauthlib.flow
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
-# @login_required
-
-# def connect_calendar(request):
-#     flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-#         'client_secret.json',
-#         scopes=SCOPES
-#     )
-#     flow.redirect_uri = request.build_absolute_uri('/booking/oauth2callback/')
-
-#     authorization_url, state = flow.authorization_url(
-#         access_type='offline',
-#         include_granted_scopes='true',
-#         prompt='consent'  # Needed to always return refresh_token
-#     )
-
-#     request.session['google_oauth_state'] = state
-#     return redirect(authorization_url)
-
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -352,8 +437,6 @@ from rest_framework import status
 import google_auth_oauthlib.flow
 from django.conf import settings
 
-
-SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
 class ConnectCalendarView(APIView):
@@ -383,7 +466,7 @@ from django.http import HttpResponse
 from django.conf import settings
 import google_auth_oauthlib.flow
 
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+
     
 
 class GoogleOAuthCallbackView(APIView):
@@ -392,10 +475,7 @@ class GoogleOAuthCallbackView(APIView):
     import os
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-    
-
     def get(self, request):
-
         # Print everything for debugging
         print("SESSION:", dict(request.session))
         print("Expected state:", request.session.get('google_oauth_state'))
@@ -408,8 +488,6 @@ class GoogleOAuthCallbackView(APIView):
 
         state = request.session.get('google_oauth_state')
         print(state)
-
-        
 
 
         print(settings.GOOGLE_CLIENT_SECRETS_FILE)
@@ -438,7 +516,8 @@ class GoogleOAuthCallbackView(APIView):
         except Mentor.DoesNotExist:
             return HttpResponse("Mentor not found for this user.", status=404)
 
-        return HttpResponse("Google alendar connected successfully! You can close this window.")
+        return HttpResponse("Google calendar connected successfully! You can close this window.")
+
 
 
 # ///////////////////////////////

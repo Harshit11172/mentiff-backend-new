@@ -6,8 +6,11 @@ from .views import (
     SignUpView, CustomAuthToken, LogoutView, MentorUpdateView,
     EmailVerificationView, FeedbackCreateView, MenteeUpdateView,
     RequestOTP, UserGroupsView,
-    PostViewSet, CommentViewSet,  # ✅ Import post and comment viewsets
+    PostViewSet, CommentViewSet,
+      MentorAvailabilityViewSet  # ✅ Import post and comment viewsets
 )
+from .views import SessionOptionViewSet
+
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -18,6 +21,9 @@ router.register(r'feedbacks', FeedbackViewSet)
 # ✅ Register post and comment endpoints
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'comments', CommentViewSet, basename='comment')
+router.register(r'mentors/(?P<mentor_pk>\d+)/availabilities', MentorAvailabilityViewSet, basename='mentor-availabilities')
+router.register(r'session-options', SessionOptionViewSet, basename="session-options")
+
 
 urlpatterns = [
     path('', include(router.urls)),
