@@ -49,6 +49,8 @@ class SignUpView(generics.CreateAPIView):
     serializer_class = CustomUserSerializer  # Serializer to handle user creation
     permission_classes = [permissions.AllowAny]
 
+
+
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')
@@ -93,18 +95,39 @@ class CustomAuthToken(ObtainAuthToken):
                     'college': group.college,
                     'logo_url': request.build_absolute_uri(group.logo.url) if group.logo else None
                 })
+            
+            mentor_id = None
+            mentee_id = None
+            about = None
+            profile_picture = None
+
+            if user.user_type == 'mentor' and hasattr(user, 'mentor_profile'):
+                mentor_id = user.mentor_profile.id
+                about = user.mentor_profile.about
+                profile_picture = request.build_absolute_uri(user.mentor_profile.profile_picture.url) if user.mentor_profile.profile_picture else None
+            elif user.user_type == 'mentee' and hasattr(user, 'mentee_profile'):
+                mentee_id = user.mentee_profile.id
+                profile_picture = request.build_absolute_uri(user.mentee_profile.profile_picture.url) if user.mentee_profile.profile_picture else None
+
+
 
             # Prepare user data to return
             user_data = {
                 'id': user.id,
+                'mentor_id': mentor_id,
+                'mentee_id': mentee_id,
                 'username': user.username,
                 'email': user.email,
-                'profile_picture': request.build_absolute_uri(user.profile_picture.url) if user.profile_picture else None,
+                'profile_picture': profile_picture,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'user_type': user.user_type,
-                'groups': group_data  # Include the group data here
+                'groups': group_data # Include the group data here
+               
             }
+            # Only include "about" if it's a mentor
+            if about is not None:
+                user_data['about'] = about
 
             return Response({
                 'token': token.key,
@@ -128,6 +151,9 @@ class CustomAuthToken(ObtainAuthToken):
         print(otp_code)
         OTP.objects.create(user=user, code=otp_code)  # Store the OTP in the database
         send_otp_email(user.email, otp_code)  # Send the OTP via email
+
+
+
 
 
 class RequestOTP(APIView):
@@ -259,9 +285,13 @@ class MenteeViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Mentor not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
+
 class MentorUpdateView(generics.UpdateAPIView):
     queryset = Mentor.objects.all()
     serializer_class = MentorSerializer
+
+
+
 
 
 class MenteeUpdateView(generics.UpdateAPIView):
@@ -278,29 +308,39 @@ from .models import Feedback, Mentor, Mentee
 from .serializers import FeedbackSerializer
 
 
+
+
+from rest_framework import viewsets, permissions
+from rest_framework.exceptions import PermissionDenied, ValidationError
+from .serializers import FeedbackSerializer
+
+
+
+
 class FeedbackViewSet(viewsets.ModelViewSet):
-    queryset = Feedback.objects.all()
+    queryset = Feedback.objects.all()   # 👈 add this line back
     serializer_class = FeedbackSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        if user.user_type == 'mentee':
+        mentor_id = self.request.query_params.get("mentor_id")
+
+        # If ?mentor_id= is passed, return feedback for that mentor
+        if mentor_id:
+            return Feedback.objects.filter(mentor_id=mentor_id, is_visible=True)
+
+        # Otherwise filter by logged-in user role
+        if user.user_type == "mentee":
             return Feedback.objects.filter(mentee=user.mentee_profile)
-        elif user.user_type == 'mentor':
+        elif user.user_type == "mentor":
             return Feedback.objects.filter(mentor=user.mentor_profile)
         return Feedback.objects.none()
-
-
-class FeedbackCreateView(generics.CreateAPIView):
-    queryset = Feedback.objects.all()
-    serializer_class = FeedbackSerializer
-    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         user = self.request.user
 
-        if user.user_type != 'mentee':
+        if user.user_type != "mentee":
             raise PermissionDenied("Only mentees can submit feedback.")
 
         try:
@@ -308,7 +348,7 @@ class FeedbackCreateView(generics.CreateAPIView):
         except Mentee.DoesNotExist:
             raise ValidationError("You do not have an associated Mentee profile.")
 
-        mentor_id = self.request.data.get('mentor')
+        mentor_id = self.request.data.get("mentor")
         if not mentor_id:
             raise ValidationError("Mentor ID is required.")
 
@@ -317,28 +357,85 @@ class FeedbackCreateView(generics.CreateAPIView):
         except Mentor.DoesNotExist:
             raise ValidationError("Mentor not found.")
 
-        # Check for completed bookings
-        completed_bookings = Booking.objects.filter(
-            mentee=mentee,
-            mentor=mentor,
-            status='completed'
-        )
+        # Ensure session is completed
+        # completed_bookings = Booking.objects.filter(
+        #     mentee=mentee,
+        #     mentor=mentor,
+        #     status="completed"
+        # )
+        # if not completed_bookings.exists():
+        #     raise ValidationError(
+        #         "You must complete a session with this mentor before giving feedback."
+        #     )
 
-        if not completed_bookings.exists():
-            raise ValidationError("You must complete a session with this mentor before giving feedback.")
-
-        # Check if feedback already exists for this mentor + mentee + session (optional)
-        session_date = self.request.data.get('session_date')
+        # Prevent duplicate feedback for same session_date
+        session_date = self.request.data.get("session_date")
         if session_date:
             existing_feedback = Feedback.objects.filter(
-                mentor=mentor,
-                mentee=mentee,
-                session_date=session_date
+                mentor=mentor, mentee=mentee, session_date=session_date
             ).exists()
             if existing_feedback:
                 raise ValidationError("You’ve already submitted feedback for this session.")
 
         serializer.save(mentee=mentee, mentor=mentor)
+
+
+
+
+
+
+
+# class FeedbackCreateView(generics.CreateAPIView):
+#     queryset = Feedback.objects.all()
+#     serializer_class = FeedbackSerializer
+#     permission_classes = [IsAuthenticated]
+
+#     def perform_create(self, serializer):
+#         user = self.request.user
+
+#         if user.user_type != 'mentee':
+#             raise PermissionDenied("Only mentees can submit feedback.")
+
+#         try:
+#             mentee = user.mentee_profile
+#         except Mentee.DoesNotExist:
+#             raise ValidationError("You do not have an associated Mentee profile.")
+
+#         mentor_id = self.request.data.get('mentor')
+#         if not mentor_id:
+#             raise ValidationError("Mentor ID is required.")
+
+#         try:
+#             mentor = Mentor.objects.get(id=mentor_id)
+#         except Mentor.DoesNotExist:
+#             raise ValidationError("Mentor not found.")
+
+#         # Check for completed bookings
+#         completed_bookings = Booking.objects.filter(
+#             mentee=mentee,
+#             mentor=mentor,
+#             status='completed'
+#         )
+
+#         if not completed_bookings.exists():
+#             raise ValidationError("You must complete a session with this mentor before giving feedback.")
+
+#         # Check if feedback already exists for this mentor + mentee + session (optional)
+#         session_date = self.request.data.get('session_date')
+#         if session_date:
+#             existing_feedback = Feedback.objects.filter(
+#                 mentor=mentor,
+#                 mentee=mentee,
+#                 session_date=session_date
+#             ).exists()
+#             if existing_feedback:
+#                 raise ValidationError("You’ve already submitted feedback for this session.")
+
+#         serializer.save(mentee=mentee, mentor=mentor)
+
+
+
+
 
 
 User = get_user_model()
@@ -677,6 +774,52 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+
+
+# from django.contrib.contenttypes.models import ContentType
+# from rest_framework import viewsets
+# from .models import Comment, Post, Feedback
+# from .serializers import CommentSerializer
+
+# class CommentViewSet(viewsets.ModelViewSet):
+#     serializer_class = CommentSerializer
+#     # permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         model = self.request.query_params.get("model")  # "post" or "feedback"
+#         object_id = self.request.query_params.get("object_id")
+
+#         if not (model and object_id):
+#             return Comment.objects.none()
+
+#         try:
+#             content_type = ContentType.objects.get(model=model)
+#         except ContentType.DoesNotExist:
+#             return Comment.objects.none()
+
+#         return Comment.objects.filter(
+#             content_type=content_type, object_id=object_id
+#         ).order_by("created_at")
+
+#     def perform_create(self, serializer):
+#         model = self.request.data.get("model")   # "post" or "feedback"
+#         object_id = self.request.data.get("object_id")
+
+#         content_type = ContentType.objects.get(model=model)
+
+#         serializer.save(
+#             author=self.request.user,
+#             content_type=content_type,
+#             object_id=object_id
+#         )
+
+
+
+
+
+
 
 
 

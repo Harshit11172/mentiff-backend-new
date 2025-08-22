@@ -59,6 +59,8 @@ class GroupMessage(models.Model):
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     
-    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)  # Add this line
+    profile_picture = models.URLField(blank=True, null=True)  # For URL strings
+
+    # profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)  # Add this line
 
     

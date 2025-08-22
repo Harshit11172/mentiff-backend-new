@@ -23,7 +23,7 @@ class MentorSerializer(serializers.ModelSerializer):
             'availability', 'rating', 'entrance_exam_given',
             'rank', 'score', 'calls_booked', 'feedback_count', 'about'
         ]
-            
+
 
     def get_feedback_count(self, obj):
         return Feedback.objects.filter(mentor=obj).count()
@@ -53,6 +53,7 @@ class MentorSerializer(serializers.ModelSerializer):
 
 class MenteeSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer(read_only=True)  # Nested serializer to include user details
+    
 
     class Meta:
         model = Mentee
@@ -64,20 +65,52 @@ class MenteeSerializer(serializers.ModelSerializer):
 
 
 
+# from rest_framework import serializers
+# from .models import Feedback, Mentor
+
+# class FeedbackSerializer(serializers.ModelSerializer):
+#     mentor = serializers.PrimaryKeyRelatedField(queryset=Mentor.objects.all())
+#     mentee = serializers.PrimaryKeyRelatedField(read_only=True)  # Mentee set automatically in view
+
+#     class Meta:
+#         model = Feedback
+#         fields = [
+#             'id',
+#             'mentor',
+#             'mentee',
+#             'session_date',
+#             'rating',
+#             'comments',
+#             'created_at',
+#             'updated_at',
+#             'is_visible'
+#         ]
+#         read_only_fields = ['created_at', 'updated_at', 'is_visible']
+
+
+from rest_framework import serializers
+from .models import Feedback, Mentor, Mentee
+
 from rest_framework import serializers
 from .models import Feedback, Mentor
 
 class FeedbackSerializer(serializers.ModelSerializer):
     mentor = serializers.PrimaryKeyRelatedField(queryset=Mentor.objects.all())
-    mentee = serializers.PrimaryKeyRelatedField(read_only=True)  # Mentee set automatically in view
+    mentee = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    # Custom field for full name
+    mentee_name = serializers.SerializerMethodField(read_only=True)
+    mentor_name = serializers.CharField(source="mentor.user.get_full_name", read_only=True)
 
     class Meta:
         model = Feedback
         fields = [
             'id',
             'mentor',
+            'mentor_name',
             'mentee',
-            'session_date',
+            'mentee_name',   # 👈 new field
+            # 'session_date',
             'rating',
             'comments',
             'created_at',
@@ -85,6 +118,16 @@ class FeedbackSerializer(serializers.ModelSerializer):
             'is_visible'
         ]
         read_only_fields = ['created_at', 'updated_at', 'is_visible']
+
+    def get_mentee_name(self, obj):
+        """Return mentee full name (first + last)"""
+        if obj.mentee and obj.mentee.user:
+            return f"{obj.mentee.user.first_name} {obj.mentee.user.last_name}".strip()
+        return obj.mentee.user.username if obj.mentee and obj.mentee.user else None
+
+
+
+
 
 
 ##-------login/logout/signup---------
@@ -201,6 +244,18 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ["id", "post", "author", "author_username", "author_image",  "text", "created_at"]  # ✅ include post
         read_only_fields = ["id", "author", "author_username", "author_image", "created_at"]
+
+
+# from rest_framework import serializers
+# from .models import Comment
+
+# class CommentSerializer(serializers.ModelSerializer):
+#     author_username = serializers.CharField(source="author.username", read_only=True)
+
+#     class Meta:
+#         model = Comment
+#         fields = ["id", "author", "author_username", "text", "created_at", "content_type", "object_id"]
+#         read_only_fields = ["author", "created_at"]
 
 
 

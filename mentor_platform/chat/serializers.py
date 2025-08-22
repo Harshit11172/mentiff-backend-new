@@ -17,8 +17,8 @@ class GroupListSerializer(serializers.ModelSerializer):
 
 class GroupMessageSerializer(serializers.ModelSerializer):
     sender = serializers.CharField(source='sender.username')  # Use the username field from the sender
-    profile_picture = serializers.ImageField(source='sender.profile_picture', allow_null=True)  # Adjusted to reference the user
-
+    # profile_picture = serializers.ImageField(source='sender.profile_picture', allow_null=True)  # Adjusted to reference the user
+    
     class Meta:
         model = GroupMessage
         fields = ['group', 'sender', 'message', 'timestamp', 'profile_picture']
@@ -74,9 +74,9 @@ class MembershipSerializer(serializers.ModelSerializer):
     date_joined = serializers.DateTimeField(source='user.date_joined', read_only=True)  # From User model
     is_active = serializers.BooleanField(source='user.is_active', read_only=True)      # From User model
     user_permissions = serializers.PrimaryKeyRelatedField(source='user.user_permissions', read_only=True, many=True)  # From User model
-    profile_picture = serializers.ImageField(source='user.profile_picture', read_only=True)  # New profile picture field
+    profile_picture = serializers.ImageField(source='user.mentor_profile.profile_picture', read_only=True)  # New profile picture field
 
-    class Meta:
+    class Meta: 
         model = Membership
         fields = ['user', 'user_id', 'username', 'user_type', 'email', 'first_name', 'last_name', 'profile_picture', 'last_login', 'date_joined', 'is_active', 'user_permissions']
 
@@ -87,6 +87,7 @@ class MembershipSerializer(serializers.ModelSerializer):
         if instance.user.user_type == 'mentor':
             # Adding mentor-specific fields
             representation['mentor_id'] = instance.user.mentor_profile.id  # Expertise area
+            
             representation['expertise'] = instance.user.mentor_profile.expertise  # Expertise area
             # representation['session_fee'] = instance.user.mentor_profile.session_fee  # Fee for sessions
             # representation['session_time'] = instance.user.mentor_profile.session_time  # sessions time

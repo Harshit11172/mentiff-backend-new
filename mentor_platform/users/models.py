@@ -172,6 +172,42 @@ class Mentor(models.Model):
         verbose_name_plural = "Mentors"
 
 
+class Mentee(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='mentee_profile')
+    phone_number = models.CharField(max_length=15, blank=True)  # Optional
+    profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default_dp.jpg', null=True, blank=True)
+
+    google_refresh_token = models.TextField(null=True, blank=True)  # Add this
+
+
+    # Academic Information
+    university = models.CharField(max_length=255, blank=True)  # Optional
+    college = models.CharField(max_length=255, blank=True)  # Optional
+
+    degree = models.CharField(max_length=100, blank=True)  # Optional
+    major = models.CharField(max_length=100, blank=True)  # Optional
+    year_of_study = models.IntegerField(null=True, blank=True)  # Optional
+    college_id = models.CharField(max_length=100, blank=True)  # Optional
+
+    # Mentorship Preferences
+    desired_expertise = models.CharField(max_length=255, blank=True)  # Optional
+    preferred_session_times = models.TextField(blank=True)  # Optional
+    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Optional
+
+    # Additional Information
+    goals = models.TextField(blank=True)  # Optional
+    feedback = models.TextField(blank=True)  # Optional
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name} - {self.university}"
+
+    class Meta:
+        verbose_name = "Mentee"
+        verbose_name_plural = "Mentees"
+
+
+
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -209,7 +245,6 @@ def create_default_session_options(sender, instance, created, **kwargs):
 
 
 
-
 class MentorAvailability(models.Model):
     mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE, related_name="availabilities")
     # day_of_week = models.IntegerField(choices=[
@@ -233,58 +268,23 @@ class MentorAvailability(models.Model):
 
 
 
-class Mentee(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='mentee_profile')
-    phone_number = models.CharField(max_length=15, blank=True)  # Optional
-    profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default_dp.jpg', null=True, blank=True)
-
-    google_refresh_token = models.TextField(null=True, blank=True)  # Add this
-
-
-    # Academic Information
-    university = models.CharField(max_length=255, blank=True)  # Optional
-    college = models.CharField(max_length=255, blank=True)  # Optional
-
-    degree = models.CharField(max_length=100, blank=True)  # Optional
-    major = models.CharField(max_length=100, blank=True)  # Optional
-    year_of_study = models.IntegerField(null=True, blank=True)  # Optional
-    college_id = models.CharField(max_length=100, blank=True)  # Optional
-
-    # Mentorship Preferences
-    desired_expertise = models.CharField(max_length=255, blank=True)  # Optional
-    preferred_session_times = models.TextField(blank=True)  # Optional
-    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Optional
-
-    # Additional Information
-    goals = models.TextField(blank=True)  # Optional
-    feedback = models.TextField(blank=True)  # Optional
-
-    def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name} - {self.university}"
-
-    class Meta:
-        verbose_name = "Mentee"
-        verbose_name_plural = "Mentees"
-
-
-
 
 class Feedback(models.Model):
     mentor = models.ForeignKey(Mentor, on_delete=models.CASCADE)
     mentee = models.ForeignKey(Mentee, on_delete=models.CASCADE, related_name='feedbacks')
-    session_date = models.DateTimeField()
+    # session_date = models.DateTimeField(null=True, blank=True)
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
     comments = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_visible = models.BooleanField(default=True)
-
-    class Meta:
-        unique_together = ('mentor', 'mentee', 'session_date')
+    
+ 
+    # class Meta:
+    #     unique_together = ('mentor', 'mentee') #'session_date'
 
     def __str__(self):
-        return f"Feedback from {self.mentee.user.username} for {self.mentor.user.username} on {self.session_date}"
-
+        return f"Feedback from {self.mentee.user.username} for {self.mentor.user.username}"
 
 
 
@@ -329,3 +329,25 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment by {self.author.username} on post {self.post.id}"
+
+
+
+
+
+# from django.db import models
+# from django.utils import timezone
+# from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.fields import GenericForeignKey
+
+# class Comment(models.Model):
+#     author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
+#     text = models.TextField()
+#     created_at = models.DateTimeField(default=timezone.now)
+
+#     # Generic foreign key (can link to Post, Feedback, etc.)
+#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+#     object_id = models.PositiveIntegerField()
+#     content_object = GenericForeignKey("content_type", "object_id")
+
+#     def __str__(self):
+#         return f"Comment by {self.author.username} on {self.content_object}"

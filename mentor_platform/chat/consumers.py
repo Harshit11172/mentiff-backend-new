@@ -100,6 +100,7 @@ class GroupChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         data = json.loads(text_data)
+        print(data)
         msg_type = data.get("type")
 
         if msg_type == "typing":
@@ -127,6 +128,9 @@ class GroupChatConsumer(AsyncWebsocketConsumer):
         except ObjectDoesNotExist:
             print(f"User {sender_username} does not exist.")
             return
+
+        # profile_picture=data.get('profile_picture')
+        # print(profile_picture)
 
         # Save to DB
         group_message = GroupMessage(

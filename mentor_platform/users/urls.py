@@ -4,7 +4,7 @@ from .views import (
     MentorViewSet, MenteeViewSet, FeedbackViewSet,
     MentorSignUpView, MenteeSignUpView, ResendVerificationEmailView,
     SignUpView, CustomAuthToken, LogoutView, MentorUpdateView,
-    EmailVerificationView, FeedbackCreateView, MenteeUpdateView,
+    EmailVerificationView, MenteeUpdateView,
     RequestOTP, UserGroupsView,
     PostViewSet, CommentViewSet,
       MentorAvailabilityViewSet  # ✅ Import post and comment viewsets
@@ -38,7 +38,7 @@ urlpatterns = [
     path('verify-email/<str:token>/', EmailVerificationView.as_view(), name='verify_email'),
     path('resend-verification/', ResendVerificationEmailView.as_view(), name='resend_verification'),
 
-    path('post/feedback/', FeedbackCreateView.as_view(), name='post-feedback'),
+    # path('post/feedback/', FeedbackCreateView.as_view(), name='post-feedback'),
 
     path('api/token/', CustomAuthToken.as_view(), name='custom_auth_token'),
     path('api/request-otp/', RequestOTP.as_view(), name='request_otp'),
