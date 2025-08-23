@@ -228,6 +228,7 @@ class SessionOption(models.Model):
         return f"{self.mentor.user.username} - {self.duration_minutes} mins @ {self.fee} {self.currency}"
 
 
+
 # --- Signal to create default session options ---
 @receiver(post_save, sender=Mentor)
 def create_default_session_options(sender, instance, created, **kwargs):
@@ -242,6 +243,7 @@ def create_default_session_options(sender, instance, created, **kwargs):
                 duration_minutes=option["duration_minutes"],
                 defaults={"fee": option["fee"], "currency": option["currency"]},
             )
+
 
 
 
