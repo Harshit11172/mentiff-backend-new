@@ -3,6 +3,8 @@
 from rest_framework import serializers
 from .models import CustomUser, Mentor, Mentee, Feedback
 from django.conf import settings
+from users.utils import send_verification_email  # You need to implement this
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -182,13 +184,28 @@ class MentorSignupSerializer(serializers.ModelSerializer):
 
         print(verification_link)
         
-        send_mail(
-            'Verify your College Email',
-            f'Please click the link to verify your email: {verification_link}',
-            'mentout@gmail.com',
-            [user.email],
-            fail_silently=False,
+        # send_mail(
+        #     'Verify your College Email',
+        #     f'Please click the link to verify your email: {verification_link}',
+        #     'mentout@gmail.com',
+        #     [user.email],
+        #     fail_silently=False,
+        # )
+
+        # Replace your existing send_mail call with:
+        success = send_verification_email(
+            email=user.email,
+            verification_link=verification_link,
+            user_name=user.first_name if hasattr(user, 'first_name') else None  # Optional personalization
         )
+
+        if success:
+            # Email sent successfully
+            print('Verification email sent! Please check your inbox.')
+        else:
+            # Email failed to send
+            print('Failed to send verification email. Please try again.')
+
 
         return user
 
@@ -217,13 +234,29 @@ class MenteeSignupSerializer(serializers.ModelSerializer):
 
         print(f"1st time Verification link is: {verification_link}")
 
-        send_mail(
-            'Verify your College Email',
-            f'Please click the link to verify your email as a Mentee: {verification_link}',
-             'mentout@gmail.com',
-            [user.email],
-            fail_silently=False,
+        # send_mail(
+        #     'Verify your College Email',
+        #     f'Please click the link to verify your email as a Mentee: {verification_link}',
+        #      'mentout@gmail.com',
+        #     [user.email],
+        #     fail_silently=False,
+        # )
+
+        # Replace your existing send_mail call with:
+        success = send_verification_email(
+            email=user.email,
+            verification_link=verification_link,
+            user_name=user.first_name if hasattr(user, 'first_name') else None  # Optional personalization
         )
+
+        if success:
+            # Email sent successfully
+            print('Verification email sent! Please check your inbox.')
+        else:
+            # Email failed to send
+            print('Failed to send verification email. Please try again.')
+
+
 
         return user
 

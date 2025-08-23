@@ -17,6 +17,8 @@ from django.contrib.auth import get_user_model
 from .serializers import CustomUserSerializer  # Create this serializer
 from rest_framework import status
 from users.utils import send_otp_email  # You need to implement this
+from users.utils import send_verification_email  # You need to implement this
+
 from users.models import OTP  # A model to store OTPs if needed
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
@@ -239,7 +241,6 @@ class MentorViewSet(viewsets.ModelViewSet):
         #     pass
 
         return queryset
-
 
 
     def retrieve(self, request, *args, **kwargs):
@@ -674,13 +675,28 @@ class ResendVerificationEmailView(generics.GenericAPIView):
 
         print(f"Resend Verification link is: {verification_link}")
         
-        send_mail(
-            'Verify your College Email',
-            f'Please click the link to verify your email: {verification_link}',
-            'mentout@gmail.com',
-            [user.email],
-            fail_silently=False,
+        # send_mail(
+        #     'Verify your College Email',
+        #     f'Please click the link to verify your email: {verification_link}',
+        #     'mentout@gmail.com',
+        #     [user.email],
+        #     fail_silently=False,
+        # )
+
+        # Replace your existing send_mail call with:
+        
+        success = send_verification_email(
+            email=user.email,
+            verification_link=verification_link,
+            user_name=user.first_name if hasattr(user, 'first_name') else None  # Optional personalization
         )
+
+        if success:
+            # Email sent successfully
+            messages.success(request, 'Verification email sent! Please check your inbox.')
+        else:
+            # Email failed to send
+            messages.error(request, 'Failed to send verification email. Please try again.')
 
         return Response({"message": "Verification email resent."}, status=status.HTTP_200_OK)
 
