@@ -3,16 +3,30 @@ from django.conf import settings
 
 
 class Group(models.Model):
+    college = models.CharField(max_length=255, default="")
     group_name = models.CharField(max_length=100)
     admins = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_groups')
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='group_members', through='Membership')
-    college = models.CharField(max_length=255, default="")
-    logo = models.ImageField(upload_to='static_files/group_logos/', default = 'static_files/group_logos/mentifflogo.png', null=True, blank=True)  # New logo field
+    category = models.CharField(max_length=100, blank=True, null=True)
+
+    
+    city = models.CharField(max_length=255, blank=True, null=True)
+    state = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=100)
+    
+    logo = models.ImageField(upload_to='static_files/group_logos/', default = 'static_files/group_logos/mentifflogo.png', null=True, blank=True)  # New logo field
     url = models.URLField(max_length=200)
+    domain = models.CharField(max_length=255, blank=True, null=True)
+
+    
     member_count = models.PositiveIntegerField(default=2)  # Member count field
     mentor_count = models.PositiveIntegerField(default=2)   # Mentor count field
     mentee_count = models.PositiveIntegerField(default=2)   # Mentee count field
+
+    # 🔹 New university-related fields
+    
+
+    
 
     def __str__(self):
         return self.college

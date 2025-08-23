@@ -12,7 +12,7 @@ class GroupListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'group_name', 'college', 'logo', 'country', 'url', 'member_count', 'mentor_count', 'mentee_count', 'message_count']
+        fields = ['id', 'category', 'group_name', 'college', 'logo','city', 'state',  'country', 'url', 'domain', 'member_count', 'mentor_count', 'mentee_count', 'message_count']
 
 
 class GroupMessageSerializer(serializers.ModelSerializer):
@@ -114,9 +114,10 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = [
             'id', 'group_name', 'admins', 'members', 
-            'college','logo', 'country', 'url', 
+            'college','logo','city', 'state', 'country', 'url', 'domain', 'category',
             'member_count', 'mentor_count', 'mentee_count'
         ]
+
 
 
 class MemberDetailSerializer(serializers.ModelSerializer):

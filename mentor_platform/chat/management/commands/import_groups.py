@@ -23,7 +23,7 @@ class Command(BaseCommand):
             if admin_users.count() == 0:
                 self.stdout.write(self.style.WARNING(f"Admin users not found: {admin_usernames}"))
                 continue
-
+                
             # Create the group
             group = Group.objects.create(
                 group_name=group_data['group_name'],
