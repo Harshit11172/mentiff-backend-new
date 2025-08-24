@@ -472,7 +472,19 @@ class EmailVerificationView(generics.GenericAPIView):
                 year_of_admission = request.data.get("year_of_admission", None)
                 if year_of_admission is None:
                     raise ValidationError({"error": "year_of_admission is required."})
-            
+
+                university_short_name = request.data.get("university_short_name", None)
+
+
+                university_city = request.data.get("university_city", None)
+
+
+                university_domain = request.data.get("university_domain", None)
+                    
+                   
+                university_state = request.data.get("university_state", None)
+                   
+
 
             user.is_verified = True  # Mark as verified
             user.is_active = True  # Activate the account
@@ -487,7 +499,13 @@ class EmailVerificationView(generics.GenericAPIView):
                     country=country,
                     college=college,
                     degree=degree,
-                    year_of_admission=year_of_admission
+                    year_of_admission=year_of_admission,
+                    #new added
+                    university_short_name = university_short_name,
+                    university_city=university_city,
+                    university_state=university_state,
+                    university_domain=university_domain
+
                 )  
             elif user.user_type == 'mentee':
                 Mentee.objects.create(
@@ -678,7 +696,7 @@ class ResendVerificationEmailView(generics.GenericAPIView):
         # send_mail(
         #     'Verify your College Email',
         #     f'Please click the link to verify your email: {verification_link}',
-        #     'mentout@gmail.com',
+        #     'mentiff5@gmail.com',
         #     [user.email],
         #     fail_silently=False,
         # )

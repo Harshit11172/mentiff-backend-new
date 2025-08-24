@@ -20,11 +20,13 @@ class MentorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mentor
         fields = [
-            'id', 'user', 'phone_number', 'profile_picture', 'country' ,'university',
-            'degree', 'major', 'year_of_admission', 'college_id', 'expertise',
-            'availability', 'rating', 'entrance_exam_given',
+            'id', 'user', 'phone_number', 'profile_picture', 'country' ,'university', 'university_short_name', 
+            'degree', 'major', 'year_of_admission', 'college_id', 'expertise', 'university_city',
+             'rating', 'entrance_exam_given', 'university_state', 'university_domain',
             'rank', 'score', 'calls_booked', 'feedback_count', 'about'
         ]
+# 'availability',
+                
 
 
     def get_feedback_count(self, obj):

@@ -68,11 +68,22 @@ class Mentor(models.Model):
 
     google_refresh_token = models.TextField(null=True, blank=True)  # Add this
 
-
-    # Academic Information
+    
+    
     country = models.CharField(max_length=100, blank=True)
+    
+    university_state = models.CharField(max_length=100, blank=True)
+    university_city = models.CharField(max_length=100, blank=True)
+
+    university_short_name = models.CharField(max_length=255, blank=True)    #######
+    
     university = models.CharField(max_length=255, blank=True)    #######
-    college = models.CharField(max_length=255, blank=True)    #######
+    college = models.CharField(max_length=255, blank=True)    ####### Here now univ and college is considered as same
+    
+    university_domain = models.CharField(max_length=255, blank=True)    #######
+    
+
+
 
     degree = models.CharField(max_length=100, blank=True)  #######
     major = models.CharField(max_length=100, blank=True)    ########
