@@ -1,4 +1,4 @@
-# chat/management/commands/updated_import_groups
+# chat/management/commands/updated_import_groups.py
 
 import json
 from django.core.management.base import BaseCommand

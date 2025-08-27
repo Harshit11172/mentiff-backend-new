@@ -10,6 +10,7 @@ from .views import (
       MentorAvailabilityViewSet  # ✅ Import post and comment viewsets
 )
 from .views import SessionOptionViewSet
+from .views import GoogleMenteeAuthView
 
 
 # Create a router and register our viewsets with it.
@@ -31,6 +32,8 @@ urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
     path('signup/mentor/', MentorSignUpView.as_view(), name='mentorsignup'),
     path('signup/mentee/', MenteeSignUpView.as_view(), name='menteesignup'),
+    path("auth/google/", GoogleMenteeAuthView.as_view(), name="google-auth"),
+
 
     path('login/', CustomAuthToken.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

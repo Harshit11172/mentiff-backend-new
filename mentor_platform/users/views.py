@@ -16,8 +16,8 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import get_user_model
 from .serializers import CustomUserSerializer  # Create this serializer
 from rest_framework import status
-from users.utils import send_otp_email  # You need to implement this
-from users.utils import send_verification_email  # You need to implement this
+from users.mail_utils import send_otp_email  # You need to implement this
+from users.mail_utils import send_verification_email  # You need to implement this
 
 from users.models import OTP  # A model to store OTPs if needed
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -28,7 +28,6 @@ from django.utils.crypto import get_random_string
 from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
 from users.models import OTP  # Ensure this import is present
-from users.utils import send_otp_email  # Implement this function to send OTPs
 
 from rest_framework import generics
 from rest_framework.response import Response
@@ -942,3 +941,151 @@ class SessionOptionViewSet(viewsets.ModelViewSet):
         return response.Response(serializer.data)
 
     
+
+
+# FOR GOOLGE DIRECT LOGIN
+
+
+# authapp/views.py
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .models import Mentee  # import your Mentee model
+from .utils.auth_utils import generate_unique_username  # adjust import path if needed
+
+User = get_user_model()
+
+def issue_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {"refresh": str(refresh), "access": str(refresh.access_token)}
+
+
+class GoogleMenteeAuthView(APIView):
+    """
+    POST /api/auth/google/
+    Body: { "credential": "<google_id_token>" }
+    Behavior:
+      - If user with google_sub exists: log in (only if user_type == 'mentee').
+      - Else if user with email exists:
+          - mark is_verified=True, verification_status='verified'
+          - attach google_sub
+          - ensure user_type becomes 'mentee' (if blank/None) or if it's 'mentor'/'admin', return error
+          - create Mentee profile if missing
+      - Else (no user):
+          - create new CustomUser with is_verified=True, verification_status='verified', user_type='mentee', username auto-generated
+          - create associated Mentee profile
+    """
+
+    authentication_classes = []  # public
+    permission_classes = []
+
+    def post(self, request):
+        print(f'payload from api is : {request.data}')
+        token = request.data.get("credential") or request.data.get("id_token") or request.data.get("token")
+        if not token:
+            return Response({"detail": "Missing credential"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            print(f'login google client id is: {settings.LOGIN_GOOGLE_CLIENT_ID}')
+            idinfo = id_token.verify_oauth2_token(token, google_requests.Request(), settings.LOGIN_GOOGLE_CLIENT_ID)
+        except Exception:
+            return Response({"detail": "Invalid Google token"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        # Basic required fields
+        google_sub = idinfo.get("sub")
+        email = idinfo.get("email")
+        email_verified = idinfo.get("email_verified", False)
+        full_name = idinfo.get("name", "")
+        first_name = idinfo.get("given_name", "") or (full_name.split(" ")[0] if full_name else "")
+        last_name = idinfo.get("family_name", "") or (" ".join(full_name.split(" ")[1:]) if full_name and len(full_name.split(" "))>1 else "")
+        picture = idinfo.get("picture", "")
+
+        # sanity checks
+        if not google_sub or not email or not email_verified:
+            return Response({"detail": "Incomplete or unverified Google profile"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Start DB transaction to ensure atomicity
+        with transaction.atomic():
+            # 1) Try by google_sub first (idempotent)
+            user = User.objects.filter(google_sub=google_sub).first()
+
+            if user:
+                # Found a linked user
+                # Only allow mentees for this endpoint
+                if getattr(user, "user_type", None) != "mentee":
+                    return Response({"detail": "This Google account is linked to a non-mentee user."}, status=status.HTTP_403_FORBIDDEN)
+
+                # ensure verified flags are set
+                user.is_verified = True
+                user.verification_status = "verified"
+                user.save(update_fields=["is_verified", "verification_status"])
+                tokens = issue_tokens_for_user(user)
+                resp = {
+                    "user": {"id": user.id, "email": user.email, "username": user.username, "user_type": user.user_type},
+                    "tokens": tokens
+                }
+                return Response(resp, status=status.HTTP_200_OK)
+
+            # 2) Else try by email
+            user_by_email = User.objects.filter(email__iexact=email).first()
+            if user_by_email:
+                # If this existing user is mentor/admin, block because you only want mentee to use this flow
+                if getattr(user_by_email, "user_type", None) and user_by_email.user_type != "mentee":
+                    return Response({"detail": "An account with this email exists as a mentor/admin. Use the correct login method."}, status=status.HTTP_403_FORBIDDEN)
+
+                # Attach google_sub, mark verified, and create mentee if missing
+                user_by_email.google_sub = google_sub
+                user_by_email.is_verified = True
+                user_by_email.verification_status = "verified"
+                # If user_type blank/None, set to mentee:
+                if not getattr(user_by_email, "user_type", None):
+                    user_by_email.user_type = "mentee"
+                # Update name if empty
+                if not user_by_email.first_name:
+                    user_by_email.first_name = first_name
+                if not user_by_email.last_name:
+                    user_by_email.last_name = last_name
+                user_by_email.save()
+
+                # Ensure Mentee profile exists
+                mentee = getattr(user_by_email, "mentee_profile", None)
+                if mentee is None:
+                    Mentee.objects.create(user=user_by_email, profile_picture=None)  # add other defaults if needed
+
+                tokens = issue_tokens_for_user(user_by_email)
+                resp = {
+                    "user": {"id": user_by_email.id, "email": user_by_email.email, "username": user_by_email.username, "user_type": user_by_email.user_type},
+                    "tokens": tokens
+                }
+                return Response(resp, status=status.HTTP_200_OK)
+
+            # 3) No user exists -> create user + mentee (auto-verified)
+            username = generate_unique_username(email)
+            new_user = User.objects.create(
+                username=username,
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                is_verified=True,
+                verification_status="verified",
+                user_type="mentee",
+                google_sub=google_sub,
+            )
+            # Create mentee entry (fill minimal required fields)
+            Mentee.objects.create(user=new_user, profile_picture=None)
+
+            tokens = issue_tokens_for_user(new_user)
+            resp = {
+                "user": {"id": new_user.id, "email": new_user.email, "username": new_user.username, "user_type": new_user.user_type},
+                "tokens": tokens
+            }
+            return Response(resp, status=status.HTTP_201_CREATED)

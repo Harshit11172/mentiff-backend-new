@@ -25,6 +25,10 @@ class CustomUser(AbstractUser):
     verification_token = models.CharField(max_length=32, null=True, blank=True)  # Token for verification
     is_verified = models.BooleanField(default=False)  # Status to track email verification
 
+    # Add this new field to store Google's "sub" identifier when user logs in via Google
+    google_sub = models.CharField(max_length=255, null=True, blank=True, unique=True)
+
+
         # New verification status field
     verification_status = models.CharField(
         max_length=15,

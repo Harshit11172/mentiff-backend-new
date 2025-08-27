@@ -3,7 +3,7 @@
 from rest_framework import serializers
 from .models import CustomUser, Mentor, Mentee, Feedback
 from django.conf import settings
-from users.utils import send_verification_email  # You need to implement this
+from users.mail_utils import send_verification_email  # You need to implement this
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
