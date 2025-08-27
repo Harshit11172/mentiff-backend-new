@@ -5,17 +5,15 @@
         "country": "India",
         "state": "Test State",
         "city": "Test City",
-        "domain": "gmail.com",
-        "url": ""
+        "domain": "gmail.com"
     },
     {
         "name": "Mock College  @yahoo.com",
         "short_name": "MCY",
-        "country": "Canada",
+        "country": "Canada",   
         "state": "California",
         "city": "San Francisco",
-        "domain": "yahoo.com",
-        "url": ""
+        "domain": "yahoo.com"
     },
     {
         "name": "Test-2 College  @yopmail.com",
@@ -23,8 +21,7 @@
         "country": "France",
         "state": "California",
         "city": "San Francisco",
-        "domain": "yopmail.com",
-        "url": ""
+        "domain": "yopmail.com"
     },
     {
         "name": "A G PATIL INSTITUTE OF TECHNOLOGY",
@@ -5363,7 +5360,7 @@
         "country": "India",
         "domain": "nitj.ac.in",
         "url": "https://www.nitj.ac.in",
-        "short_name": "NITJ",
+        "short_name": "NIT Jalandhar",
         "category": []
     },
     {
@@ -10223,7 +10220,7 @@
         "country": "India",
         "domain": "iima.ac.in",
         "url": "http://www.iima.ac.in/",
-        "short_name": "IIM Ahmedabad (IIMA)",
+        "short_name": "IIM Ahmedabad",
         "category": []
     },
     {
@@ -10233,7 +10230,7 @@
         "country": "India",
         "domain": "iimb.ac.in",
         "url": "http://www.iimb.ac.in/",
-        "short_name": "IIM Bangalore (IIMB)",
+        "short_name": "IIM Bangalore",
         "category": []
     },
     {
@@ -10243,7 +10240,7 @@
         "country": "India",
         "domain": "iimcal.ac.in",
         "url": "http://www.iimcal.ac.in/",
-        "short_name": "IIM Calcutta (IIMC)",
+        "short_name": "IIM Calcutta",
         "category": []
     },
     {
@@ -10253,7 +10250,7 @@
         "country": "India",
         "domain": "iiml.ac.in",
         "url": "http://www.iiml.ac.in/",
-        "short_name": "IIM Lucknow (IIML)",
+        "short_name": "IIM Lucknow",
         "category": []
     },
     {
@@ -10263,7 +10260,7 @@
         "country": "India",
         "domain": "iimk.ac.in",
         "url": "http://www.iimk.ac.in/",
-        "short_name": "IIM Kozhikode (IIMK)",
+        "short_name": "IIM Kozhikode",
         "category": []
     },
     {
@@ -10273,7 +10270,7 @@
         "country": "India",
         "domain": "iimidr.ac.in",
         "url": "http://www.iimidr.ac.in/",
-        "short_name": "IIM Indore (IIMI)",
+        "short_name": "IIM Indore",
         "category": []
     },
     {
@@ -10283,7 +10280,7 @@
         "country": "India",
         "domain": "iimshillong.ac.in",
         "url": "http://www.iimshillong.ac.in/",
-        "short_name": "IIM Shillong (IIMS)",
+        "short_name": "IIM Shillong",
         "category": []
     },
     {
@@ -10293,7 +10290,7 @@
         "country": "India",
         "domain": "iimrohtak.ac.in",
         "url": "http://www.iimrohtak.ac.in/",
-        "short_name": "IIM Rohtak (IIMR)",
+        "short_name": "IIM Rohtak",
         "category": []
     },
     {
@@ -10303,7 +10300,7 @@
         "country": "India",
         "domain": "iimranchi.ac.in",
         "url": "http://www.iimranchi.ac.in/",
-        "short_name": "IIM Ranchi (IIMRA)",
+        "short_name": "IIM Ranchi",
         "category": []
     },
     {
@@ -10313,7 +10310,7 @@
         "country": "India",
         "domain": "iimraipur.ac.in",
         "url": "http://www.iimraipur.ac.in/",
-        "short_name": "IIM Raipur (IIMRP)",
+        "short_name": "IIM Raipur",
         "category": []
     },
     {
@@ -10323,7 +10320,7 @@
         "country": "India",
         "domain": "iimtrichy.ac.in",
         "url": "http://www.iimtrichy.ac.in/",
-        "short_name": "IIM Tiruchirappalli (IIMT)",
+        "short_name": "IIM Tiruchirappalli",
         "category": []
     },
     {
@@ -10333,7 +10330,7 @@
         "country": "India",
         "domain": "iimkashipur.ac.in",
         "url": "http://www.iimkashipur.ac.in/",
-        "short_name": "IIM Kashipur (IIMKA)",
+        "short_name": "IIM Kashipur",
         "category": []
     },
     {
@@ -10343,7 +10340,7 @@
         "country": "India",
         "domain": "iimu.ac.in",
         "url": "http://www.iimu.ac.in/",
-        "short_name": "IIM Udaipur (IIMU)",
+        "short_name": "IIM Udaipur",
         "category": []
     },
     {
@@ -10353,7 +10350,7 @@
         "country": "India",
         "domain": "iimnagpur.ac.in",
         "url": "http://www.iimnagpur.ac.in/",
-        "short_name": "IIM Nagpur (IIMN)",
+        "short_name": "IIM Nagpur",
         "category": []
     },
     {
@@ -10363,7 +10360,7 @@
         "country": "India",
         "domain": "iimv.ac.in",
         "url": "http://www.iimv.ac.in/",
-        "short_name": "IIM Visakhapatnam (IIMV)",
+        "short_name": "IIM Visakhapatnam",
         "category": []
     },
     {
@@ -10373,7 +10370,7 @@
         "country": "India",
         "domain": "iimbg.ac.in",
         "url": "http://www.iimbg.ac.in/",
-        "short_name": "IIM Bodh Gaya (IIMBG)",
+        "short_name": "IIM Bodh Gaya",
         "category": []
     },
     {
@@ -10383,7 +10380,7 @@
         "country": "India",
         "domain": "iimamritsar.ac.in",
         "url": "http://www.iimamritsar.ac.in/",
-        "short_name": "IIM Amritsar (IIMAMS)",
+        "short_name": "IIM Amritsar",
         "category": []
     },
     {
@@ -10393,7 +10390,7 @@
         "country": "India",
         "domain": "iimsambalpur.ac.in",
         "url": "http://www.iimsambalpur.ac.in/",
-        "short_name": "IIM Sambalpur (IIMS)",
+        "short_name": "IIM Sambalpur",
         "category": []
     },
     {
@@ -10403,7 +10400,7 @@
         "country": "India",
         "domain": "iimsirmaur.ac.in",
         "url": "http://www.iimsirmaur.ac.in/",
-        "short_name": "IIM Sirmaur (IIMSR)",
+        "short_name": "IIM Sirmaur",
         "category": []
     },
     {
@@ -10413,7 +10410,7 @@
         "country": "India",
         "domain": "iimj.ac.in",
         "url": "http://www.iimj.ac.in/",
-        "short_name": "IIM Jammu (IIMJ)",
+        "short_name": "IIM Jammu",
         "category": []
     },
     {
@@ -10423,7 +10420,7 @@
         "country": "India",
         "domain": "xlri.ac.in",
         "url": "https://www.xlri.ac.in",
-        "short_name": "XLRI",
+        "short_name": "XLRI Jamshedpur",
         "category": []
     },
     {
@@ -10633,7 +10630,7 @@
         "country": "India",
         "domain": "iitbhu.ac.in",
         "url": "https://www.iitbhu.ac.in/",
-        "short_name": "IITBHU",
+        "short_name": "IIT Varanasi",
         "category": []
     },
     {
@@ -10643,9 +10640,10 @@
         "country": "India",
         "domain": "iitism.ac.in",
         "url": "https://www.iitism.ac.in/",
-        "short_name": "IIT(ISM)",
+        "short_name": "IIT Dhanbad",
         "category": []
     },
+      
     {
         "name": "Indian Institute of Technology Bhilai",
         "city": "Raipur",
@@ -10653,7 +10651,7 @@
         "country": "India",
         "domain": "iitbhilai.ac.in",
         "url": "https://www.iitbhilai.ac.in/",
-        "short_name": "IITBH",
+        "short_name": "IIT Bhilai",
         "category": []
     },
     {
@@ -10663,7 +10661,7 @@
         "country": "India",
         "domain": "iitdh.ac.in",
         "url": "https://www.iitdh.ac.in/",
-        "short_name": "IITDH",
+        "short_name": "IIT Dharwad",
         "category": []
     },
     {
@@ -10673,7 +10671,7 @@
         "country": "India",
         "domain": "iitjammu.ac.in",
         "url": "https://www.iitjammu.ac.in/",
-        "short_name": "IITJMU",
+        "short_name": "IIT Jammu",
         "category": []
     },
     {
@@ -10683,9 +10681,10 @@
         "country": "India",
         "domain": "iitbbs.ac.in",
         "url": "https://www.iitbbs.ac.in/",
-        "short_name": "",
+        "short_name": "IIT Bhibhneswar",
         "category": []
     },
+
     {
         "name": "Indian Institute of Technology Bombay",
         "city": "Mumbai",
@@ -10693,7 +10692,7 @@
         "country": "India",
         "domain": "iitb.ac.in",
         "url": "https://www.iitb.ac.in/",
-        "short_name": "IITB",
+        "short_name": "IIT Bombay",
         "category": []
     },
     {
@@ -10703,7 +10702,7 @@
         "country": "India",
         "domain": "iitd.ac.in",
         "url": "https://www.iitd.ac.in/",
-        "short_name": "IITD",
+        "short_name": "IIT Delhi",
         "category": []
     },
     {
@@ -10713,7 +10712,7 @@
         "country": "India",
         "domain": "iitgn.ac.in",
         "url": "https://www.iitgn.ac.in/",
-        "short_name": "IITGN",
+        "short_name": "IIT Gandhinagar",
         "category": []
     },
     {
@@ -10723,7 +10722,7 @@
         "country": "India",
         "domain": "iitg.ac.in",
         "url": "https://www.iitg.ac.in/",
-        "short_name": "IITG",
+        "short_name": "IIT Guwahati",
         "category": []
     },
     {
@@ -10733,7 +10732,7 @@
         "country": "India",
         "domain": "iith.ac.in",
         "url": "https://www.iitg.ac.in/",
-        "short_name": "IITH",
+        "short_name": "IIT Hyderabad",
         "category": []
     },
     {
@@ -10743,7 +10742,7 @@
         "country": "India",
         "domain": "iitg.ac.in",
         "url": "https://www.iiti.ac.in/",
-        "short_name": "IITI",
+        "short_name": "IIT Indore",
         "category": []
     },
     {
@@ -10753,7 +10752,7 @@
         "country": "India",
         "domain": "iitj.ac.in",
         "url": "https://www.iitj.ac.in/",
-        "short_name": "",
+        "short_name": "IIT Jodhpur",
         "category": []
     },
     {
@@ -10763,7 +10762,7 @@
         "country": "India",
         "domain": "iitk.ac.in",
         "url": "https://www.iitk.ac.in/",
-        "short_name": "IITK",
+        "short_name": "IIT Kanpur",
         "category": []
     },
     {
@@ -10773,7 +10772,7 @@
         "country": "India",
         "domain": "iitkgp.ac.in",
         "url": "https://www.iitkgp.ac.in/",
-        "short_name": "IITKGP",
+        "short_name": "IIT Kharagpur",
         "category": []
     },
     {
@@ -10783,7 +10782,7 @@
         "country": "India",
         "domain": "iitm.ac.in",
         "url": "https://www.iitm.ac.in/",
-        "short_name": "IITM",
+        "short_name": "IIT Madras",
         "category": []
     },
     {
@@ -10793,7 +10792,7 @@
         "country": "India",
         "domain": "iitmandi.ac.in",
         "url": "https://www.iitmandi.ac.in/",
-        "short_name": "IITMD",
+        "short_name": "IIT Mandi",
         "category": []
     },
     {
@@ -10803,7 +10802,7 @@
         "country": "India",
         "domain": "iitpkd.ac.in",
         "url": "https://www.iitpkd.ac.in/",
-        "short_name": "IITPKD",
+        "short_name": "IIT Palakkad",
         "category": []
     },
     {
@@ -10813,7 +10812,7 @@
         "country": "India",
         "domain": "www.iitp.ac.in",
         "url": "https://www.iitp.ac.in/",
-        "short_name": "",
+        "short_name": "IIT Patna",
         "category": []
     },
     {
@@ -10823,7 +10822,7 @@
         "country": "India",
         "domain": "iitr.ac.in",
         "url": "https://www.iitr.ac.in/",
-        "short_name": "IITR",
+        "short_name": "IIT Roorkee",
         "category": []
     },
     {
@@ -10833,7 +10832,7 @@
         "country": "India",
         "domain": "iitrpr.ac.in",
         "url": "https://www.iitrpr.ac.in/",
-        "short_name": "IITRPR",
+        "short_name": "IIT Ropar",
         "category": []
     },
     {
@@ -10843,9 +10842,10 @@
         "country": "India",
         "domain": "iittp.ac.in",
         "url": "https://www.iittp.ac.in/",
-        "short_name": "IITTP",
+        "short_name": "IIT Tirupati",
         "category": []
     },
+  
     {
         "name": "Indian Law Institute",
         "city": "New Delhi",
@@ -10864,6 +10864,256 @@
         "domain": "",
         "url": "",
         "short_name": "",
+        "category": []
+    },
+    {
+        "name": "Atal Bihari Vajpayee Indian Institute of Information Technology and Management",
+        "city": "Gwalior",
+        "state": "Madhya Pradesh",
+        "country": "India",
+        "domain": "iiitm.ac.in",
+        "url": "https://www.iiitm.ac.in/",
+        "short_name": "IIIT Gwalior",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Allahabad",
+        "city": "Allahabad",
+        "state": "Uttar Pradesh",
+        "country": "India",
+        "domain": "iiita.ac.in",
+        "url": "https://www.iiita.ac.in/",
+        "short_name": "IIIT Allahabad",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology Design and Manufacturing, Jabalpur",
+        "city": "Jabalpur",
+        "state": "Madhya Pradesh",
+        "country": "India",
+        "domain": "iiitdmj.ac.in",
+        "url": "https://iiitdmj.ac.in/",
+        "short_name": "IIIT Jabalpur",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology Design and Manufacturing, Chennai",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "domain": "iiitdm.ac.in",
+        "url": "https://www.iiitdm.ac.in/",
+        "short_name": "IIIT Chennai",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Sri City",
+        "city": "Sri City",
+        "state": "Andhra Pradesh",
+        "country": "India",
+        "domain": "iiits.ac.in",
+        "url": "https://www.iiits.ac.in/",
+        "short_name": "IIIT Sri City",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Guwahati",
+        "city": "Guwahati",
+        "state": "Assam",
+        "country": "India",
+        "domain": "iiitg.ac.in",
+        "url": "https://www.iiitg.ac.in/",
+        "short_name": "IIIT Guwahati",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Vadodara",
+        "city": "Vadodara",
+        "state": "Gujarat",
+        "country": "India",
+        "domain": "iiitvadodara.ac.in",
+        "url": "https://iiitvadodara.ac.in/",
+        "short_name": "IIIT Vadodara",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Kota",
+        "city": "Kota",
+        "state": "Rajasthan",
+        "country": "India",
+        "domain": "iiitkota.ac.in",
+        "url": "https://iiitkota.ac.in/",
+        "short_name": "IIIT Kota",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Tiruchirappalli",
+        "city": "Tiruchirappalli",
+        "state": "Tamil Nadu",
+        "country": "India",
+        "domain": "iiitt.ac.in",
+        "url": "https://iiitt.ac.in/",
+        "short_name": "IIIT Tiruchirappalli",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Dharwad",
+        "city": "Dharwad",
+        "state": "Karnataka",
+        "country": "India",
+        "domain": "iiitdwd.ac.in",
+        "url": "https://www.iiitdwd.ac.in/",
+        "short_name": "IIIT Dharwad",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Una",
+        "city": "Una",
+        "state": "Himachal Pradesh",
+        "country": "India",
+        "domain": "iiitu.ac.in",
+        "url": "https://iiitu.ac.in/",
+        "short_name": "IIIT Una",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Sonepat",
+        "city": "Sonepat",
+        "state": "Haryana",
+        "country": "India",
+        "domain": "iiitsonepat.ac.in",
+        "url": "https://iiitsonepat.ac.in/",
+        "short_name": "IIIT Sonepat",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Kalyani",
+        "city": "Kalyani",
+        "state": "West Bengal",
+        "country": "India",
+        "domain": "iiitkalyani.ac.in",
+        "url": "https://iiitkalyani.ac.in/",
+        "short_name": "IIIT Kalyani",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Lucknow",
+        "city": "Lucknow",
+        "state": "Uttar Pradesh",
+        "country": "India",
+        "domain": "iiitl.ac.in",
+        "url": "https://iiitl.ac.in/",
+        "short_name": "IIIT Lucknow",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology Design and Manufacturing, Kurnool",
+        "city": "Kurnool",
+        "state": "Andhra Pradesh",
+        "country": "India",
+        "domain": "iiitk.ac.in",
+        "url": "https://iiitk.ac.in/",
+        "short_name": "IIIT Kurnool",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Kottayam",
+        "city": "Kottayam",
+        "state": "Kerala",
+        "country": "India",
+        "domain": "iiitkottayam.ac.in",
+        "url": "https://www.iiitkottayam.ac.in/",
+        "short_name": "IIIT Kottayam",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Manipur",
+        "city": "Imphal",
+        "state": "Manipur",
+        "country": "India",
+        "domain": "iiitmanipur.ac.in",
+        "url": "https://www.iiitmanipur.ac.in/",
+        "short_name": "IIIT Manipur",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Nagpur",
+        "city": "Nagpur",
+        "state": "Maharashtra",
+        "country": "India",
+        "domain": "iiitn.ac.in",
+        "url": "https://iiitn.ac.in/",
+        "short_name": "IIIT Nagpur",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Pune",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "country": "India",
+        "domain": "iiitp.ac.in",
+        "url": "https://iiitp.ac.in/",
+        "short_name": "IIIT Pune",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Ranchi",
+        "city": "Ranchi",
+        "state": "Jharkhand",
+        "country": "India",
+        "domain": "iiitranchi.ac.in",
+        "url": "https://iiitranchi.ac.in/",
+        "short_name": "IIIT Ranchi",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Surat",
+        "city": "Surat",
+        "state": "Gujarat",
+        "country": "India",
+        "domain": "iiitsurat.ac.in",
+        "url": "https://www.iiitsurat.ac.in/",
+        "short_name": "IIIT Surat",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Bhopal",
+        "city": "Bhopal",
+        "state": "Madhya Pradesh",
+        "country": "India",
+        "domain": "iiitbhopal.ac.in",
+        "url": "https://www.iiitbhopal.ac.in/",
+        "short_name": "IIIT Bhopal",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Bhagalpur",
+        "city": "Bhagalpur",
+        "state": "Bihar",
+        "country": "India",
+        "domain": "iiitbh.ac.in",
+        "url": "https://iiitbh.ac.in/",
+        "short_name": "IIIT Bhagalpur",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Agartala",
+        "city": "Agartala",
+        "state": "Tripura",
+        "country": "India",
+        "domain": "iiitagartala.ac.in",
+        "url": "https://iiitagartala.ac.in/",
+        "short_name": "IIIT Agartala",
+        "category": []
+    },
+    {
+        "name": "Indian Institute of Information Technology, Raichur",
+        "city": "Raichur",
+        "state": "Karnataka",
+        "country": "India",
+        "domain": "iiitr.ac.in",
+        "url": "https://iiitr.ac.in/",
+        "short_name": "IIIT Raichur",
         "category": []
     },
     {
@@ -15363,7 +15613,7 @@
         "country": "India",
         "domain": "mnit.ac.in",
         "url": "https://www.mnit.ac.in",
-        "short_name": "MNIT",
+        "short_name": "NIT Jaipur",
         "category": []
     },
     {
@@ -15897,13 +16147,13 @@
         "category": []
     },
     {
-        "name": "Maulana Azad National Institute of Technology",
+        "name": "Maulana Azad National Institute of Technology, Bhopal",
         "city": "Bhopal",
         "state": "Madhya Pradesh",
         "country": "India",
         "domain": "manit.ac.in",
         "url": "https://www.manit.ac.in",
-        "short_name": "MANIT",
+        "short_name": "NIT Bhopal",
         "category": []
     },
     {
@@ -16453,7 +16703,7 @@
         "country": "India",
         "domain": "mnnit.ac.in",
         "url": "https://www.mnnit.ac.in/",
-        "short_name": "MNNIT",
+        "short_name": "NIT Allahbad",
         "category": []
     },
     {
@@ -17113,7 +17363,7 @@
         "country": "India",
         "domain": "nitc.ac.in",
         "url": "https://www.nitc.ac.in",
-        "short_name": "NITC",
+        "short_name": "NIT Calicut",
         "category": []
     },
     {
@@ -17123,7 +17373,7 @@
         "country": "India",
         "domain": "nitdelhi.ac.in",
         "url": "https://www.nitdelhi.ac.in",
-        "short_name": "NITD",
+        "short_name": "NIT Delhi",
         "category": []
     },
     {
@@ -17133,7 +17383,7 @@
         "country": "India",
         "domain": "nitdgp.ac.in",
         "url": "https://www.nitdgp.ac.in",
-        "short_name": "NITDGP",
+        "short_name": "NIT Durgapur",
         "category": []
     },
     {
@@ -17143,7 +17393,7 @@
         "country": "India",
         "domain": "nitgoa.ac.in",
         "url": "https://www.nitgoa.ac.in",
-        "short_name": "NITGOA",
+        "short_name": "NIT Goa",
         "category": []
     },
     {
@@ -17153,7 +17403,7 @@
         "country": "India",
         "domain": "nith.ac.in",
         "url": "https://www.nith.ac.in",
-        "short_name": "NITH",
+        "short_name": "NIT Hamirpur",
         "category": []
     },
     {
@@ -17163,7 +17413,7 @@
         "country": "India",
         "domain": "nitk.ac.in",
         "url": "https://www.nitk.ac.in",
-        "short_name": "NITK",
+        "short_name": "NIT Surathkal",
         "category": []
     },
     {
@@ -17173,7 +17423,7 @@
         "country": "India",
         "domain": "nitkkr.ac.in",
         "url": "https://www.nitkkr.ac.in",
-        "short_name": "NITKKR",
+        "short_name": "NIT Kurukshetra",
         "category": []
     },
     {
@@ -17183,7 +17433,7 @@
         "country": "India",
         "domain": "nitmeg.ac.in",
         "url": "https://www.nitmeg.ac.in",
-        "short_name": "NITM",
+        "short_name": "NIT Meghalaya",
         "category": []
     },
     {
@@ -17193,7 +17443,7 @@
         "country": "India",
         "domain": "nitmz.ac.in",
         "url": "https://www.nitmz.ac.in",
-        "short_name": "NITMZ",
+        "short_name": "NIT Mizoram",
         "category": []
     },
     {
@@ -17203,7 +17453,7 @@
         "country": "India",
         "domain": "nitp.ac.in",
         "url": "https://www.nitp.ac.in",
-        "short_name": "NITP",
+        "short_name": "NIT Patna",
         "category": []
     },
     {
@@ -17213,7 +17463,7 @@
         "country": "India",
         "domain": "nitpy.ac.in",
         "url": "https://www.nitpy.ac.in",
-        "short_name": "NITPY",
+        "short_name": "NIT Puducherry",
         "category": []
     },
     {
@@ -17223,7 +17473,7 @@
         "country": "India",
         "domain": "nitrr.ac.in",
         "url": "https://www.nitrr.ac.in",
-        "short_name": "NITRR",
+        "short_name": "NIT Raipur",
         "category": []
     },
     {
@@ -17233,7 +17483,7 @@
         "country": "India",
         "domain": "nitrkl.ac.in",
         "url": "https://www.nitrkl.ac.in",
-        "short_name": "NITRKL",
+        "short_name": "NIT Rourkela",
         "category": []
     },
     {
@@ -17243,7 +17493,7 @@
         "country": "India",
         "domain": "nits.ac.in",
         "url": "https://www.nits.ac.in",
-        "short_name": "NITSIL",
+        "short_name": "NIT Silchar",
         "category": []
     },
     {
@@ -17253,7 +17503,7 @@
         "country": "India",
         "domain": "nitsri.ac.in",
         "url": "https://nitsri.ac.in",
-        "short_name": "NITSR",
+        "short_name": "NIT Srinagar",
         "category": []
     },
     {
@@ -17263,7 +17513,7 @@
         "country": "India",
         "domain": "nitt.edu",
         "url": "https://www.nitt.edu/",
-        "short_name": "",
+        "short_name": "NIT Tiruchirappalli",
         "category": []
     },
     {
@@ -17273,7 +17523,7 @@
         "country": "India",
         "domain": "nituk.ac.in",
         "url": "https://www.nituk.ac.in/",
-        "short_name": "NITUK",
+        "short_name": "NIT Uttarakhand",
         "category": []
     },
     {
@@ -17283,7 +17533,7 @@
         "country": "India",
         "domain": "nitw.ac.in",
         "url": "https://www.nitw.ac.in/",
-        "short_name": "NITW",
+        "short_name": "NIT Warangal",
         "category": []
     },
     {
@@ -17293,7 +17543,7 @@
         "country": "India",
         "domain": "nitandhra.ac.in",
         "url": "https://nitandhra.ac.in/main/",
-        "short_name": "NITAP",
+        "short_name": "NIT Andhra Pradesh",
         "category": []
     },
     {
@@ -24873,7 +25123,7 @@
         "country": "India",
         "domain": "nitap.ac.in",
         "url": "https://www.nitap.ac.in/",
-        "short_name": "NIT Arunachal",
+        "short_name": "NIT Arunachal Pradesh",
         "category": []
     },
     {
@@ -24883,7 +25133,7 @@
         "country": "India",
         "domain": "nitjsr.ac.in",
         "url": "nitap.ac.in",
-        "short_name": "NITJSR",
+        "short_name": "NIT Jamshedpur",
         "category": []
     },
     {
@@ -27733,7 +27983,7 @@
         "country": "India",
         "domain": "vnit.ac.in",
         "url": "https://www.vnit.ac.in/",
-        "short_name": "VNIT",
+        "short_name": "NIT Nagpur",
         "category": []
     },
     {
@@ -27773,7 +28023,7 @@
         "country": "India",
         "domain": "svnit.ac.in",
         "url": "https://www.svnit.ac.in/",
-        "short_name": "SVNIT",
+        "short_name": "NIT Surat",
         "category": []
     },
     {

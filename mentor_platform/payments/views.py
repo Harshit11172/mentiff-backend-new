@@ -98,3 +98,165 @@ class MentorEarningDetailView(RetrieveAPIView):
 
     def get_object(self):
         return MentorEarning.objects.get(user=self.request.user)
+
+
+
+
+
+
+# PHONE PAY INTEGRATION!!!
+
+
+# payments/views.py
+import uuid
+from django.http import JsonResponse
+from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from .models import SessionPayment, TransactionLog, CustomUser
+from payments.phonepe_client import PhonePeClient
+
+from decimal import Decimal
+
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class InitiatePaymentView(View):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = json.loads(request.body)
+
+            mentor_id = data.get("mentor_id")
+            mentee_id = data.get("mentee_id")
+            session_id = data.get("session_id") or str(uuid.uuid4())
+            total_amount = Decimal(str(data.get("total_amount")))
+            callback_url = data.get("callback_url")
+
+            if not (mentor_id and mentee_id and total_amount):
+                return JsonResponse({"error": "mentor_id, mentee_id, total_amount are required"}, status=400)
+
+            mentor = CustomUser.objects.get(id=mentor_id)
+            mentee = CustomUser.objects.get(id=mentee_id)
+
+            session_payment = SessionPayment.objects.create(
+                mentor=mentor,
+                mentee=mentee,
+                session_id=session_id,
+                total_amount=total_amount
+            )
+
+            # ✅ Create TransactionLog first with unique txn ID
+            transaction_log = TransactionLog.objects.create(
+                session_payment=session_payment,
+                transaction_id=str(uuid.uuid4()),   # our internal ID
+                amount=total_amount,
+                status="INITIATED"
+            )
+
+            # ✅ Call PhonePe API
+            client = PhonePeClient()
+            response = client.initiate_payment(session_payment, transaction_log)
+            print('response in initiate is: ')
+            print(response)
+
+            # ✅ Update transaction log with PhonePe response
+            transaction_log.status = response.get("status", "PENDING")
+            transaction_log.raw_response = response
+            transaction_log.save()
+
+            return JsonResponse({
+                "payment_url": response.get("paymentUrl"),
+                "transaction_id": transaction_log.transaction_id,
+                "status": transaction_log.status,
+                "session_id": session_id
+            })
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class PaymentCallbackView(View):
+    """Handle PhonePe callback (success/failure)."""
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST.dict()
+        session_id = data.get("sessionId")
+        status = data.get("status")
+
+        try:
+            session_payment = SessionPayment.objects.get(session_id=session_id)
+        except SessionPayment.DoesNotExist:
+            return JsonResponse({"error": "Invalid session ID"}, status=400)
+
+        # Update payment status
+        session_payment.status = status.upper()
+        session_payment.save()
+
+        # Log callback
+        TransactionLog.objects.create(
+            payment=session_payment,
+            transaction_id=data.get("transactionId"),
+            status=status,
+            raw_response=data
+        )
+
+        return JsonResponse({"message": "Callback processed"})
+
+
+
+
+
+class CheckPaymentStatusView(View):
+    """Check status of a payment session."""
+
+    def get(self, request, *args, **kwargs):
+        session_id = request.GET.get("session_id")
+
+        try:
+            session_payment = SessionPayment.objects.get(session_id=session_id)
+        except SessionPayment.DoesNotExist:
+            return JsonResponse({"error": "Invalid session ID"}, status=400)
+
+        client = PhonePeClient()
+        status_response = client.check_status(session_payment.session_id)
+
+        # Update DB if needed
+        session_payment.status = status_response.get("status", session_payment.status)
+        session_payment.save()
+
+        # Log status check
+        TransactionLog.objects.create(
+            payment=session_payment,
+            status=status_response.get("status"),
+            raw_response=status_response
+        )
+
+        return JsonResponse(status_response)
+
+
+class RefundPaymentView(View):
+    """Trigger a refund for a payment."""
+
+    def post(self, request, *args, **kwargs):
+        session_id = request.POST.get("session_id")
+        refund_amount = int(request.POST.get("amount", 0)) * 100  # in paise
+
+        try:
+            session_payment = SessionPayment.objects.get(session_id=session_id)
+        except SessionPayment.DoesNotExist:
+            return JsonResponse({"error": "Invalid session ID"}, status=400)
+
+        client = PhonePeClient()
+        refund_response = client.refund(session_payment.session_id, refund_amount)
+
+        # Log refund
+        TransactionLog.objects.create(
+            payment=session_payment,
+            refund_id=refund_response.get("refundId"),
+            refund_status=refund_response.get("status"),
+            raw_response=refund_response
+        )
+
+        return JsonResponse(refund_response)

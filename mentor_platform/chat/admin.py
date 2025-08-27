@@ -31,7 +31,7 @@ class MembershipAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'group__group_name')
 
 class GroupMessageAdmin(admin.ModelAdmin):
-    list_display = ('group', 'sender', 'message', 'timestamp', 'profile_picture')
+    list_display = ('id', 'group', 'sender', 'message', 'timestamp', 'profile_picture')
     list_filter = ('group', 'sender')
     search_fields = ('sender','group')
 

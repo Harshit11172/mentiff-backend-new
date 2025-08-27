@@ -28,8 +28,6 @@ urlpatterns = [
     path('api/voice_video/', include('voice_video.urls')),
     path('api/', include('education.urls')),
     path('api/', include('mentorship.urls')),
-
-    
 ]
 
 

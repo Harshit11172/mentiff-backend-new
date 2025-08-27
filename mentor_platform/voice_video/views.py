@@ -440,7 +440,7 @@ from django.conf import settings
 
 
 class ConnectCalendarView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
@@ -470,7 +470,7 @@ import google_auth_oauthlib.flow
     
 
 class GoogleOAuthCallbackView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     print("Inside GoogleOAuthCallbackView")
     import os
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'

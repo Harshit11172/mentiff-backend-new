@@ -325,5 +325,21 @@ PLATFORM_FEE_PERCENT = Decimal('2.0')   # 10%
 SERVICE_CHARGE_PERCENT = Decimal('30.0')  # 5%
 
 
+# Phone pay Integration
+
+PHONEPE_BASE_URL = env("PHONEPE_BASE_URL")
+
+PHONEPE_MERCHANT_ID = env("PHONEPE_MERCHANT_ID")
+
+PHONEPE_CLIENT_ID = env("PHONEPE_CLIENT_ID")
+
+PHONEPE_API_KEY = env("PHONEPE_API_KEY")
+
+PHONEPE_KEY_INDEX = env("PHONEPE_KEY_INDEX", default="1")
+
+PHONEPE_REDIRECT_URL = env("PHONEPE_REDIRECT_URL", default="https://yourdomain.com/payments/callback/")
+
+PHONEPE_CALLBACK_URL = env("PHONEPE_CALLBACK_URL", default="https://yourdomain.com/payments/callback/")
+
 
 
