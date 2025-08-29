@@ -173,7 +173,115 @@ from decimal import Decimal
 
 
 
+# class SessionPayment(models.Model):
+#     mentor = models.ForeignKey(
+#         settings.AUTH_USER_MODEL, 
+#         on_delete=models.CASCADE, 
+#         related_name='received_payments'
+#     )
+#     mentee = models.ForeignKey(
+#         settings.AUTH_USER_MODEL, 
+#         on_delete=models.CASCADE, 
+#         related_name='made_payments'
+#     )
+#     session_id = models.CharField(max_length=100, unique=True)
+
+#     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     platform_fee = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     service_charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+#     mentor_earning = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+#     payment_date = models.DateTimeField(auto_now_add=True)
+#     is_disbursed = models.BooleanField(default=False)
+
+#     # New fields
+#     currency = models.CharField(max_length=10, default="INR")
+#     payment_method = models.CharField(max_length=50, blank=True, null=True)  # UPI, Card, Netbanking, etc.
+#     refund_id = models.CharField(max_length=100, blank=True, null=True)
+#     refund_status = models.CharField(max_length=50, blank=True, null=True)
+
+#     def calculate_fees(self):
+#         platform_fee = (self.total_amount * settings.PLATFORM_FEE_PERCENT) / Decimal('100.0')
+#         service_charge = (self.total_amount * settings.SERVICE_CHARGE_PERCENT) / Decimal('100.0')
+#         mentor_earning = self.total_amount - platform_fee - service_charge
+#         return platform_fee, service_charge, mentor_earning
+
+#     def save(self, *args, **kwargs):
+#         if not self.pk:  # On creation
+#             platform_fee, service_charge, mentor_earning = self.calculate_fees()
+#             self.platform_fee = platform_fee
+#             self.service_charge = service_charge
+#             self.mentor_earning = mentor_earning
+#         super().save(*args, **kwargs)
+
+
+
+
+
+
+
+# class TransactionLog(models.Model):
+#     PAYMENT_STATUS_CHOICES = [
+#         ("INITIATED", "Initiated"),
+#         ("PENDING", "Pending"),
+#         ("SUCCESS", "Success"),
+#         ("FAILED", "Failed"),
+#         ("REFUNDED", "Refunded"),
+#     ]
+
+#     session_payment = models.ForeignKey(
+#         SessionPayment,
+#         on_delete=models.CASCADE,
+#         related_name="transactions"
+#     )
+
+#     transaction_id = models.CharField(max_length=100, unique=True)  # From PhonePe
+#     order_id = models.CharField(max_length=100, blank=True, null=True)  # internal mapping
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     currency = models.CharField(max_length=10, default="INR")
+#     payment_method = models.CharField(max_length=50, blank=True, null=True)
+
+#     status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default="INITIATED")
+#     raw_response = models.JSONField(blank=True, null=True)  # store full PhonePe response
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     # Refund tracking
+#     refund_id = models.CharField(max_length=100, blank=True, null=True)
+#     refund_status = models.CharField(max_length=50, blank=True, null=True)
+
+#     def __str__(self):
+#         return f"Transaction {self.transaction_id} - {self.status}"
+
+
+
+
+
+
+
+
+
+
+# payments/models.py
+from django.db import models
+from django.conf import settings
+from decimal import Decimal
+import uuid
+
+
 class SessionPayment(models.Model):
+    PAYMENT_STATUS_CHOICES = [
+        ('INITIATED', 'Initiated'),
+        ('PENDING', 'Pending'),
+        ('SUCCESS', 'Success'),
+        ('COMPLETED', 'Completed'),  # Keep both for compatibility
+        ('FAILED', 'Failed'),
+        ('CANCELLED', 'Cancelled'),
+        ('REFUNDED', 'Refunded'),
+        ('PARTIAL_REFUNDED', 'Partially Refunded'),
+    ]
+    
     mentor = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         on_delete=models.CASCADE, 
@@ -191,18 +299,30 @@ class SessionPayment(models.Model):
     service_charge = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     mentor_earning = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
+    # Status and tracking fields
+    status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='INITIATED')
     payment_date = models.DateTimeField(auto_now_add=True)
     is_disbursed = models.BooleanField(default=False)
 
-    # New fields
+    # Payment details
     currency = models.CharField(max_length=10, default="INR")
     payment_method = models.CharField(max_length=50, blank=True, null=True)  # UPI, Card, Netbanking, etc.
+    
+    # Refund fields
     refund_id = models.CharField(max_length=100, blank=True, null=True)
     refund_status = models.CharField(max_length=50, blank=True, null=True)
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def calculate_fees(self):
-        platform_fee = (self.total_amount * settings.PLATFORM_FEE_PERCENT) / Decimal('100.0')
-        service_charge = (self.total_amount * settings.SERVICE_CHARGE_PERCENT) / Decimal('100.0')
+        """Calculate platform fee, service charge, and mentor earnings"""
+        platform_fee_percent = getattr(settings, 'PLATFORM_FEE_PERCENT', Decimal('5.0'))
+        service_charge_percent = getattr(settings, 'SERVICE_CHARGE_PERCENT', Decimal('2.0'))
+        
+        platform_fee = (self.total_amount * platform_fee_percent) / Decimal('100.0')
+        service_charge = (self.total_amount * service_charge_percent) / Decimal('100.0')
         mentor_earning = self.total_amount - platform_fee - service_charge
         return platform_fee, service_charge, mentor_earning
 
@@ -214,10 +334,17 @@ class SessionPayment(models.Model):
             self.mentor_earning = mentor_earning
         super().save(*args, **kwargs)
 
+    class Meta:
+        db_table = 'session_payments'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['session_id']),
+            models.Index(fields=['status']),
+            models.Index(fields=['created_at']),
+        ]
 
-
-
-
+    def __str__(self):
+        return f"Payment {self.session_id} - {self.status}"
 
 
 class TransactionLog(models.Model):
@@ -225,8 +352,13 @@ class TransactionLog(models.Model):
         ("INITIATED", "Initiated"),
         ("PENDING", "Pending"),
         ("SUCCESS", "Success"),
+        ("COMPLETED", "Completed"),  # Keep both for compatibility
         ("FAILED", "Failed"),
+        ("CANCELLED", "Cancelled"),
         ("REFUNDED", "Refunded"),
+        ("REFUND_INITIATED", "Refund Initiated"),
+        ("REFUND_COMPLETED", "Refund Completed"),
+        ("REFUND_FAILED", "Refund Failed"),
     ]
 
     session_payment = models.ForeignKey(
@@ -235,21 +367,37 @@ class TransactionLog(models.Model):
         related_name="transactions"
     )
 
-    transaction_id = models.CharField(max_length=100, unique=True)  # From PhonePe
-    order_id = models.CharField(max_length=100, blank=True, null=True)  # internal mapping
+    # Transaction IDs
+    transaction_id = models.CharField(max_length=100, unique=True)  # Our merchant_order_id
+    phonepe_transaction_id = models.CharField(max_length=100, blank=True, null=True)  # PhonePe's transaction ID
+    order_id = models.CharField(max_length=100, blank=True, null=True)  # Internal mapping/reference
+    
+    # Payment details
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=10, default="INR")
     payment_method = models.CharField(max_length=50, blank=True, null=True)
 
+    # Status tracking
     status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default="INITIATED")
-    raw_response = models.JSONField(blank=True, null=True)  # store full PhonePe response
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    raw_response = models.JSONField(blank=True, null=True)  # Store full PhonePe response
 
     # Refund tracking
     refund_id = models.CharField(max_length=100, blank=True, null=True)
     refund_status = models.CharField(max_length=50, blank=True, null=True)
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'transaction_logs'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['transaction_id']),
+            models.Index(fields=['phonepe_transaction_id']),
+            models.Index(fields=['status']),
+            models.Index(fields=['created_at']),
+        ]
 
     def __str__(self):
         return f"Transaction {self.transaction_id} - {self.status}"

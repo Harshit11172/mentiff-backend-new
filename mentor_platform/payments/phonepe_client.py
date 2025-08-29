@@ -1,58 +1,209 @@
+# # payments/phonepe_client.py
+
+# from django.conf import settings
+# from uuid import uuid4
+# from phonepe.sdk.pg.env import Env
+# from phonepe.sdk.pg.payments.v2.standard_checkout_client import StandardCheckoutClient
+# from phonepe.sdk.pg.payments.v2.models.request.standard_checkout_pay_request import StandardCheckoutPayRequest
+# from phonepe.sdk.pg.common.models.request.meta_info import MetaInfo
+
+
+# class PhonePeClient:
+#     def __init__(self):
+#         self.client_id = settings.PHONEPE_CLIENT_ID
+#         self.client_secret = settings.PHONEPE_CLIENT_SECRET
+#         self.client_version = settings.PHONEPE_CLIENT_VERSION
+#         self.redirect_url = settings.PHONEPE_REDIRECT_URL
+#         self.callback_url = settings.PHONEPE_CALLBACK_URL  # keep for future use/logs
+
+#         # Initialize SDK client
+#         self.client = StandardCheckoutClient.get_instance(
+#             client_id=self.client_id,
+#             client_secret=self.client_secret,
+#             client_version=self.client_version,
+#             env=Env.SANDBOX if settings.DEBUG else Env.PROD,
+#             should_publish_events=False
+#         )
+
+#     def initiate_payment(self, session_payment, transaction_log):
+#         """ Initiates a PhonePe payment using V2 SDK """
+
+#         unique_order_id = str(uuid4())
+#         amount = int(session_payment.total_amount * 100)  # in paise
+
+#         # Meta info (optional, you can remove if not needed)
+#         meta_info = MetaInfo(
+#             udf1=str(session_payment.mentee.id),
+#             udf2="mentee-payment",
+#             udf3="v2-api"
+#         )
+
+#         # ✅ Do NOT pass callback_url here (not supported in v2 build_request)
+#         standard_pay_request = StandardCheckoutPayRequest.build_request(
+#             merchant_order_id=unique_order_id,
+#             amount=amount,
+#             redirect_url=self.redirect_url,
+#             meta_info=meta_info
+#         )
+
+#         # Call PhonePe API via SDK
+#         standard_pay_response = self.client.pay(standard_pay_request)
+
+#         return {
+#             "order_id": unique_order_id,
+#             "redirect_url": standard_pay_response.redirect_url,
+#             "raw_response": standard_pay_response.__dict__  # for debugging
+#         }
+
+
+
+
+
+
+
+
+
 # payments/phonepe_client.py
 
-import hashlib, json, base64, requests
 from django.conf import settings
+from uuid import uuid4
+from phonepe.sdk.pg.env import Env
+from phonepe.sdk.pg.payments.v2.standard_checkout_client import StandardCheckoutClient
+from phonepe.sdk.pg.payments.v2.models.request.standard_checkout_pay_request import StandardCheckoutPayRequest
+from phonepe.sdk.pg.common.models.request.meta_info import MetaInfo
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class PhonePeClient:
-    BASE_URL = settings.PHONEPE_BASE_URL 
-    print(f"base url is {BASE_URL}")
-    # "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1"
-    # PHONEPE_BASE_URL=https://api-preprod.phonepe.com/apis/pg-sandbox
-
-
     def __init__(self):
-        self.merchant_id = settings.PHONEPE_MERCHANT_ID
-        self.api_key = settings.PHONEPE_API_KEY
-        self.key_index = settings.PHONEPE_KEY_INDEX
+        self.client_id = settings.PHONEPE_CLIENT_ID
+        self.client_secret = settings.PHONEPE_CLIENT_SECRET
+        self.client_version = settings.PHONEPE_CLIENT_VERSION
         self.redirect_url = settings.PHONEPE_REDIRECT_URL
-        self.callback_url = settings.PHONEPE_CALLBACK_URL
+        self.callback_url = getattr(settings, 'PHONEPE_CALLBACK_URL', None)
 
-    def _generate_checksum(self, payload: dict) -> tuple[str, str]:
-        """
-        PhonePe checksum format:
-        base64encodedPayload + "/pg/v1/pay" + apiKey
-        """
-        encoded_payload = base64.b64encode(json.dumps(payload).encode()).decode()
-        string_to_hash = encoded_payload + "/pg/v1/pay" + self.api_key
-        checksum = hashlib.sha256(string_to_hash.encode()).hexdigest() + "###" + str(self.key_index)
-        return encoded_payload, checksum
-    
+        # Initialize SDK client
+        try:
+            self.client = StandardCheckoutClient.get_instance(
+                client_id=self.client_id,
+                client_secret=self.client_secret,
+                client_version=self.client_version,
+                env=Env.SANDBOX if settings.DEBUG else Env.PROD,
+                should_publish_events=False
+            )
+        except Exception as e:
+            logger.error(f"Failed to initialize PhonePe client: {e}")
+            raise
 
     def initiate_payment(self, session_payment, transaction_log):
-        payload = {
-            "merchantId": self.merchant_id,
-            "merchantTransactionId": transaction_log.transaction_id,
-            "merchantUserId": str(session_payment.mentee.id),
-            "amount": int(session_payment.total_amount * 100),  # in paise
-            "redirectUrl": self.redirect_url,
-            "redirectMode": "POST",
-            "callbackUrl": self.callback_url,
-            "paymentInstrument": {"type": "PAY_PAGE"}
-        }
+        """Initiates a PhonePe payment using V2 SDK"""
+        try:
+            merchant_order_id = transaction_log.transaction_id
+            amount = int(session_payment.total_amount * 100)  # Convert to paise
 
-        encoded_payload, checksum = self._generate_checksum(payload)
-        print(checksum)
-        print(self.merchant_id)
-        headers = {
-            "Content-Type": "application/json",
-            "X-VERIFY": checksum,
-            "X-MERCHANT-ID": self.merchant_id,
-        }
+            # Meta info for additional data
+            meta_info = MetaInfo(
+                udf1=str(session_payment.mentee.id),
+                udf2=str(session_payment.mentor.id),
+                udf3=session_payment.session_id
+            )
 
-        url = f"{self.BASE_URL}/pay"
-        print(url)
-        response = requests.post(url, json={"request": encoded_payload}, headers=headers)
-        print('response from phonepe is')
-        print(response.json())
-        return response.json()
+            # Build payment request
+            standard_pay_request = StandardCheckoutPayRequest.build_request(
+                merchant_order_id=merchant_order_id,
+                amount=amount,
+                redirect_url=self.redirect_url,
+                
+                meta_info=meta_info
+            )
+            print(f"phonepe client payload {standard_pay_request}")
+            # Call PhonePe API
+            standard_pay_response = self.client.pay(standard_pay_request)
+            
+            # Debug: Log the response attributes
+            logger.info(f"PhonePe payment initiated: {merchant_order_id}")
+            logger.debug(f"Response attributes: {dir(standard_pay_response)}")
+            logger.debug(f"Response redirect_url: {standard_pay_response.redirect_url}")
+
+            # StandardCheckoutPayResponse only contains redirect_url
+            # PhonePe's transaction ID will be available later via status check
+            return {
+                "success": True,
+                "redirect_url": standard_pay_response.redirect_url,
+                "merchant_order_id": merchant_order_id,
+                "raw_response": {
+                    "redirect_url": standard_pay_response.redirect_url,
+                    "response_type": "StandardCheckoutPayResponse",
+                    "available_attributes": dir(standard_pay_response)
+                }
+            }
+
+        except Exception as e:
+            logger.error(f"PhonePe payment initiation failed: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "message": "Payment initiation failed"
+            }
+
+    def check_status(self, merchant_order_id):
+        """Check payment status using merchant_order_id"""
+        try:
+            status_response = self.client.check_status(merchant_order_id)
+            
+            logger.info(f"Status check for {merchant_order_id}: {status_response}")
+            
+            return {
+                "success": True,
+                "data": {
+                    "transactionId": status_response.transaction_id,
+                    "state": status_response.state,
+                    "responseCode": status_response.response_code,
+                    "amount": status_response.amount,
+                    "merchantOrderId": merchant_order_id
+                },
+                "raw_response": status_response.__dict__
+            }
+
+        except Exception as e:
+            logger.error(f"Status check failed for {merchant_order_id}: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "message": "Status check failed"
+            }
+
+    def refund(self, merchant_order_id, phonepe_transaction_id, refund_amount_paise):
+        """Initiate refund for a transaction"""
+        try:
+            # Generate unique refund ID
+            refund_id = f"refund_{str(uuid4())}"
+            
+            # Note: You'll need to check the actual SDK method for refunds
+            # This is a placeholder - adjust based on actual SDK
+            refund_response = self.client.refund(
+                merchant_order_id=merchant_order_id,
+                transaction_id=phonepe_transaction_id,
+                refund_id=refund_id,
+                amount=refund_amount_paise
+            )
+            
+            logger.info(f"Refund initiated: {refund_id} for {merchant_order_id}")
+            
+            return {
+                "success": True,
+                "refundId": refund_id,
+                "status": "REFUND_INITIATED",
+                "amount": refund_amount_paise,
+                "raw_response": refund_response.__dict__ if hasattr(refund_response, '__dict__') else str(refund_response)
+            }
+
+        except Exception as e:
+            logger.error(f"Refund failed for {merchant_order_id}: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "message": "Refund initiation failed"
+            }

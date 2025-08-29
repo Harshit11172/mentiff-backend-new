@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import environ 
-
+import phonepe
+phonepe.__version__ = "2.1.5"
 
 # Initialize environment variables
 env = environ.Env(
@@ -339,9 +340,20 @@ PHONEPE_API_KEY = env("PHONEPE_API_KEY")
 
 PHONEPE_KEY_INDEX = env("PHONEPE_KEY_INDEX", default="1")
 
-PHONEPE_REDIRECT_URL = env("PHONEPE_REDIRECT_URL", default="https://yourdomain.com/payments/callback/")
+PHONEPE_REDIRECT_URL = env("PHONEPE_REDIRECT_URL", default="http://localhost:3000")
 
-PHONEPE_CALLBACK_URL = env("PHONEPE_CALLBACK_URL", default="https://yourdomain.com/payments/callback/")
+PHONEPE_CALLBACK_URL = env("PHONEPE_CALLBACK_URL", default="http://localhost:3000")
+
+
+
+
+PHONEPE_CLIENT_SECRET = env("PHONEPE_CLIENT_SECRET")
+
+
+
+
+PHONEPE_CLIENT_VERSION=env("PHONEPE_CLIENT_VERSION")
+
 
 
 
