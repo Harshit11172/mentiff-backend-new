@@ -84,13 +84,17 @@ class PhonePeClient:
         self.redirect_url = settings.PHONEPE_REDIRECT_URL
         self.callback_url = getattr(settings, 'PHONEPE_CALLBACK_URL', None)
 
+                
+        from phonepe.sdk.pg import env
+        print(dir(env.Env))
+
         # Initialize SDK client
         try:
             self.client = StandardCheckoutClient.get_instance(
                 client_id=self.client_id,
                 client_secret=self.client_secret,
                 client_version=self.client_version,
-                env=Env.SANDBOX if settings.DEBUG else Env.PROD,
+                env=Env.SANDBOX if settings.PHONEPE_TEST else Env.PRODUCTION,
                 should_publish_events=False
             )
         except Exception as e:
