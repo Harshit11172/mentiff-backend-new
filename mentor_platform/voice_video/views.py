@@ -467,7 +467,8 @@ from django.conf import settings
 import google_auth_oauthlib.flow
 
 
-    
+# from .serializers import CustomUserSerializer  # adjust import to your app
+
 
 class GoogleOAuthCallbackView(APIView):
     # permission_classes = [IsAuthenticated]

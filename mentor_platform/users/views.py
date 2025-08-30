@@ -1073,9 +1073,10 @@ class GoogleMenteeAuthView(APIView):
                 # Ensure Mentee profile exists
                 mentee = getattr(user_by_email, "mentee_profile", None)
                 if mentee is None:
-                    mentee_data = {"user": new_user}
+                    mentee_data = {"user": user_by_email}   # use user_by_email here
                     if picture:  # if Google provided profile picture
                         mentee_data["profile_picture"] = picture  
+
 
                     Mentee.objects.create(**mentee_data)
                     mentor_id = None
