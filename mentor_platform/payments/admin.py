@@ -19,16 +19,6 @@ class MentorEarningAdmin(admin.ModelAdmin):
     search_fields = ('user__username',)
 
 
-# @admin.register(SessionPayment)
-# class SessionPaymentAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'session_id', 'mentor', 'mentee', 'total_amount',
-#         'platform_fee', 'service_charge', 'mentor_earning',
-#         'payment_date', 'is_disbursed'
-#     )
-#     search_fields = ('session_id', 'mentor__username', 'mentee__username')
-#     list_filter = ('is_disbursed', 'payment_date')
-
 
 @admin.register(WithdrawalRequest)
 class WithdrawalRequestAdmin(admin.ModelAdmin):
@@ -88,3 +78,5 @@ class TransactionLogAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
+
+

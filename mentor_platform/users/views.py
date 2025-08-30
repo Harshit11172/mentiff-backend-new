@@ -965,8 +965,9 @@ from .utils.auth_utils import generate_unique_username  # adjust import path if 
 User = get_user_model()
 
 def issue_tokens_for_user(user):
-    refresh = RefreshToken.for_user(user)
-    return {"refresh": str(refresh), "access": str(refresh.access_token)}
+    token, _ = Token.objects.get_or_create(user=user)
+
+    return {token.key}
 
 
 class GoogleMenteeAuthView(APIView):
@@ -984,7 +985,7 @@ class GoogleMenteeAuthView(APIView):
           - create new CustomUser with is_verified=True, verification_status='verified', user_type='mentee', username auto-generated
           - create associated Mentee profile
     """
-
+    
     authentication_classes = []  # public
     permission_classes = []
 
@@ -1028,10 +1029,23 @@ class GoogleMenteeAuthView(APIView):
                 user.is_verified = True
                 user.verification_status = "verified"
                 user.save(update_fields=["is_verified", "verification_status"])
-                tokens = issue_tokens_for_user(user)
+                token = issue_tokens_for_user(user)
+                mentor_id = None
+                mentee_id = None
+                about = None
+                profile_picture = None
+
+                if user.user_type == 'mentor' and hasattr(user, 'mentor_profile'):
+                    mentor_id = user.mentor_profile.id
+                    about = user.mentor_profile.about
+                    profile_picture = request.build_absolute_uri(user.mentor_profile.profile_picture.url) if user.mentor_profile.profile_picture else None
+                elif user.user_type == 'mentee' and hasattr(user, 'mentee_profile'):
+                    mentee_id = user.mentee_profile.id
+                    profile_picture = request.build_absolute_uri(user.mentee_profile.profile_picture.url) if user.mentee_profile.profile_picture else None
+
                 resp = {
-                    "user": {"id": user.id, "email": user.email, "username": user.username, "user_type": user.user_type},
-                    "tokens": tokens
+                    "user": {"id": user.id, "profile_picture": profile_picture, "mentee_id": mentee_id, "mentor_id": mentor_id,  "first_name": user.first_name, "last_name": user.last_name, "email": user.email, "username": user.username, "user_type": user.user_type},
+                    "token": token
                 }
                 return Response(resp, status=status.HTTP_200_OK)
 
@@ -1040,7 +1054,7 @@ class GoogleMenteeAuthView(APIView):
             if user_by_email:
                 # If this existing user is mentor/admin, block because you only want mentee to use this flow
                 if getattr(user_by_email, "user_type", None) and user_by_email.user_type != "mentee":
-                    return Response({"detail": "An account with this email exists as a mentor/admin. Use the correct login method."}, status=status.HTTP_403_FORBIDDEN)
+                    return Response({"detail": "An account with this email exists as a mentor. Login via OTP!"}, status=status.HTTP_403_FORBIDDEN)
 
                 # Attach google_sub, mark verified, and create mentee if missing
                 user_by_email.google_sub = google_sub
@@ -1059,12 +1073,28 @@ class GoogleMenteeAuthView(APIView):
                 # Ensure Mentee profile exists
                 mentee = getattr(user_by_email, "mentee_profile", None)
                 if mentee is None:
-                    Mentee.objects.create(user=user_by_email, profile_picture=None)  # add other defaults if needed
+                    mentee_data = {"user": new_user}
+                    if picture:  # if Google provided profile picture
+                        mentee_data["profile_picture"] = picture  
 
-                tokens = issue_tokens_for_user(user_by_email)
+                    Mentee.objects.create(**mentee_data)
+                mentor_id = None
+                mentee_id = None
+                about = None
+                profile_picture = None
+
+                if user.user_type == 'mentor' and hasattr(user, 'mentor_profile'):
+                    mentor_id = user.mentor_profile.id
+                    about = user.mentor_profile.about
+                    profile_picture = request.build_absolute_uri(user.mentor_profile.profile_picture.url) if user.mentor_profile.profile_picture else None
+                elif user.user_type == 'mentee' and hasattr(user, 'mentee_profile'):
+                    mentee_id = user.mentee_profile.id
+                    profile_picture = request.build_absolute_uri(user.mentee_profile.profile_picture.url) if user.mentee_profile.profile_picture else None
+
+                token = issue_tokens_for_user(user_by_email)
                 resp = {
-                    "user": {"id": user_by_email.id, "email": user_by_email.email, "username": user_by_email.username, "user_type": user_by_email.user_type},
-                    "tokens": tokens
+                    "user": {"id": user.id, "profile_picture": profile_picture, "mentee_id": mentee_id, "mentor_id": mentor_id,  "first_name": user.first_name, "last_name": user.last_name, "email": user.email, "username": user.username, "user_type": user.user_type},
+                    "token": token
                 }
                 return Response(resp, status=status.HTTP_200_OK)
 
@@ -1080,12 +1110,57 @@ class GoogleMenteeAuthView(APIView):
                 user_type="mentee",
                 google_sub=google_sub,
             )
+
             # Create mentee entry (fill minimal required fields)
             Mentee.objects.create(user=new_user, profile_picture=None)
+            
+            mentor_id = None
+            mentee_id = None
+            about = None
+            profile_picture = None
 
-            tokens = issue_tokens_for_user(new_user)
+            if user.user_type == 'mentor' and hasattr(user, 'mentor_profile'):
+                mentor_id = user.mentor_profile.id
+                about = user.mentor_profile.about
+                profile_picture = request.build_absolute_uri(user.mentor_profile.profile_picture.url) if user.mentor_profile.profile_picture else None
+            elif user.user_type == 'mentee' and hasattr(user, 'mentee_profile'):
+                mentee_id = user.mentee_profile.id
+                profile_picture = request.build_absolute_uri(user.mentee_profile.profile_picture.url) if user.mentee_profile.profile_picture else None
+
+
+            token = issue_tokens_for_user(new_user)
             resp = {
-                "user": {"id": new_user.id, "email": new_user.email, "username": new_user.username, "user_type": new_user.user_type},
-                "tokens": tokens
+                    "user": {"id": user.id, "profile_picture": profile_picture, "mentee_id": mentee_id, "mentor_id": mentor_id,  "first_name": user.first_name, "last_name": user.last_name, "email": user.email, "username": user.username, "user_type": user.user_type},
+                "token": token
             }
             return Response(resp, status=status.HTTP_201_CREATED)
+
+
+
+
+# normal sign in response is {
+#   "id": 10,
+#   "mentor_id": null,
+#   "mentee_id": 16,
+#   "username": "mentee2",
+#   "email": "rajnipathak0107@gmail.com",
+#   "profile_picture": null,
+#   "first_name": "R",
+#   "last_name": "Pathak",
+#   "user_type": "mentee",
+#   "groups": []
+# } 
+
+
+# response from google sign in is :
+# {
+#   "id": 10,
+#   "profile_picture": null,
+#   "mentee_id": 16,
+#   "mentor_id": null,
+#   "first_name": "R",
+#   "last_name": "Pathak",
+#   "email": "rajnipathak0107@gmail.com",
+#   "username": "mentee2",
+#   "user_type": "mentee"
+# }

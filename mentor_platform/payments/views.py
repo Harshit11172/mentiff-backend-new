@@ -387,9 +387,10 @@ class PaymentCallbackView(View):
     def post(self, request, *args, **kwargs):
         try:
             # PhonePe sends data as form-encoded, not JSON
+            print("PHONEPE HAS HIT THE CALLBACK API FROM THEIR SERVER!")
             merchant_order_id = request.POST.get("merchantOrderId")
             transaction_id = request.POST.get("transactionId")
-            print("In paymentcallback view which is called by phonepe to verify details like")
+            print("Data send is: ")
             print(request)
 
             if not merchant_order_id:
@@ -405,7 +406,7 @@ class PaymentCallbackView(View):
             # Check payment status from PhonePe
             client = PhonePeClient()
             status_response = client.check_status(merchant_order_id)
-            
+
             if status_response.get("success"):
                 payment_data = status_response.get("data", {})
                 payment_status = payment_data.get("state")
