@@ -1054,7 +1054,7 @@ class GoogleMenteeAuthView(APIView):
             if user_by_email:
                 # If this existing user is mentor/admin, block because you only want mentee to use this flow
                 if getattr(user_by_email, "user_type", None) and user_by_email.user_type != "mentee":
-                    return Response({"detail": "An account with this email exists as a mentor. Login via OTP!"}, status=status.HTTP_403_FORBIDDEN)
+                    return Response({"detail": "An account with this email exists as a mentor. Login via email OTP!"}, status=status.HTTP_403_FORBIDDEN)
 
                 # Attach google_sub, mark verified, and create mentee if missing
                 user_by_email.google_sub = google_sub
