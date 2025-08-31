@@ -1060,6 +1060,8 @@ class GoogleMenteeAuthView(APIView):
                 user_by_email.google_sub = google_sub
                 user_by_email.is_verified = True
                 user_by_email.verification_status = "verified"
+                user_by_email.is_active = True
+                
                 # If user_type blank/None, set to mentee:
                 if not getattr(user_by_email, "user_type", None):
                     user_by_email.user_type = "mentee"
@@ -1079,7 +1081,7 @@ class GoogleMenteeAuthView(APIView):
 
 
                     Mentee.objects.create(**mentee_data)
-                    mentor_id = None
+                    mentor_id = None    
                     mentee_id = None
                     about = None
                     profile_picture = None
@@ -1118,6 +1120,7 @@ class GoogleMenteeAuthView(APIView):
                 first_name=first_name,
                 last_name=last_name,
                 is_verified=True,
+                is_active=True,
                 verification_status="verified",
                 user_type="mentee",
                 google_sub=google_sub,
