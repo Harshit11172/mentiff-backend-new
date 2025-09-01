@@ -328,7 +328,7 @@ class InitiatePaymentView(View):
                 mentor=mentor.user,        # Pass CustomUser instance
                 mentee=mentee.user,
                 session_id=session_id,
-                currency=currency
+                currency=currency,
                 total_amount=total_amount,
                 status="INITIATED"  # Set initial status
             )
@@ -338,7 +338,7 @@ class InitiatePaymentView(View):
             transaction_log = TransactionLog.objects.create(
                 session_payment=session_payment,
                 transaction_id=merchant_order_id,
-                currency=currency  # This should match what we send to PhonePe
+                currency=currency , # This should match what we send to PhonePe
                 amount=total_amount,
                 status="INITIATED"
             )
