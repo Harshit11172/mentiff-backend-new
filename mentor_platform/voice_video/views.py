@@ -470,6 +470,7 @@ import google_auth_oauthlib.flow
 # from .serializers import CustomUserSerializer  # adjust import to your app
 
 
+
 class GoogleOAuthCallbackView(APIView):
     # permission_classes = [IsAuthenticated]
     print("Inside GoogleOAuthCallbackView")
